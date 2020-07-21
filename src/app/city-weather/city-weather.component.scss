@@ -1,0 +1,60 @@
+.wrapper {
+  width: 800px;
+  height: 500px;
+  border: 1px solid black;
+}
+.top {
+  display: flex;
+  flex-direction: row;
+  height: 30%;
+
+}
+.center {
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.bottom {
+  height: 30%;
+}
+.forecast-days-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.day {
+  margin-right: 5%;
+  width: 15%;
+  height: 80%;
+}
+.left {
+  width: 20%;
+}
+.middle{
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+}
+.right {
+  width: 20%;
+
+}
+.start-btn{
+  text-align: center;
+  display: inline-block;
+  margin:5px;
+  font-weight: bold;
+  padding: 10px 0 10px 10px ;
+  background-color: lightgray;
+  text-shadow: -1px -1px black, 1px 1px white;
+  color: gray;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -o-border-radius: 7px;
+  border-radius: 7px;
+  box-shadow: 0 .2em gray;
+  cursor: pointer;
+
+}

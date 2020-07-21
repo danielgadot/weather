@@ -1,0 +1,6 @@
+<div class="wrapper">
+
+  <div *ngFor="let fav of favorites$ | async" >
+    <day-weather [day]="fav"></day-weather>
+  </div>
+</div>

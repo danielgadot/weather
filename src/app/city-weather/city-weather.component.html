@@ -1,0 +1,29 @@
+
+<div class="wrapper">
+  <div class="top">
+  <div class="left">
+
+  </div>
+
+    <div class="middle">
+      <span>{{ city$ | async}}</span>
+      <span>{{ temperature$ | async }} C</span>
+
+
+    </div>
+    <div class="right">
+      <img src="./../../assets/img/unfavorite.svg" alt="">
+      <button class="start-btn" (click)="addToFav()">Add Tof Favorites</button>
+    </div>
+  </div>
+
+  <div class="center">
+    <h2>Scattered clouds</h2>
+  </div>
+  <div class="bottom forecast-days-wrap">
+    <div *ngFor="let day of forecastDays$ | async" class="day">
+      <forecast-day [day]="day"></forecast-day>
+    </div>
+  </div>
+
+</div>

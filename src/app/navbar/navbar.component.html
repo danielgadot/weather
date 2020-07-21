@@ -1,0 +1,9 @@
+<!-- your navs bound to current route fragments -->
+<ul ngbNav [activeId]="route.fragment | async" class="nav-tabs">
+  <li [ngbNavItem]="link.fragment" *ngFor="let link of links">
+    <a ngbNavLink [routerLink]="link.fragment">{{ link.title }}</a>
+  </li>
+  <li class="neumorphism-toggle">
+    <input type="checkbox" id="neumorphism" checked>
+  </li>
+</ul>

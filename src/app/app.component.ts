@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'herolo-home-assignment';
+  constructor() {
+    // navigator.geolocation.getCurrentPosition((position)=> {
+    //   console.log(position)
+    // },(err)=>{console.log('err', err)})
+  }
 }
+
+
