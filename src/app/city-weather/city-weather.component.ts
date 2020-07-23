@@ -39,9 +39,10 @@ export class CityWeatherComponent implements OnInit {
     this.store.pipe(
       select('weather', 'loaded'),
       tap(() => this.store.dispatch(WeatherActions.getForecastDays({ id: 215854 })))
-      )
+    )
       this.forecastDays$ = this.store.pipe(
         select('weather', 'forecastDays'),
+        tap((res) => console.log('forecastDays :: ', res)),
         map(res => res)
       )
   }

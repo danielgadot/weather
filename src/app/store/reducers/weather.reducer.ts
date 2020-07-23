@@ -70,21 +70,23 @@ const _weatherReducer = createReducer(
   on(WeatherActions.fetchedCitySuccess, (state, payload) => {
     return {
       ...state,
-      currentCityWeather: payload.data[0],
+      currentCityWeather: payload.data,
       loading: false,
       loaded: true
     }
   }),
   on(WeatherActions.getForecastDays, (state, payload) => {
-    console.log('payload :: ', payload);
     
     return {
       ...state,
-      forecastDays: [{
-        city: 'Tel Aviv',
-        temperature: 38,
-        desc: 'Sunny'
-      }],
+      forecastDays: [],
+    }
+  }),
+  on(WeatherActions.setForecastDays, (state, payload) => {
+    console.log('payload ForecastDays:: ', payload);
+    return {
+      ...state,
+      forecastDays: payload.forecastDays,
     }
   })
 );

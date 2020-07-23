@@ -1,14 +1,14 @@
-interface TempType {
+export interface TempType {
   Value: number;
   Unit?: string;
   UnitType?: number;
 }
 
-interface Temperature {
+export interface Temperature {
   Imperial?: TempType, Metric: TempType
 }
 
-interface DayTime {
+export interface DayTime {
   Icon: number,
   IconPhrase: string,
   HasPrecipitation: boolean
@@ -27,14 +27,3 @@ export interface CityWeather {
   WeatherText?: string;
 }
 
-export interface DailyForecasts {
-    Date: string;
-    EpochDate: number;
-    Temperature: Temperature;
-    Day: DayTime;
-    Night: DayTime;
-    Sources: string[];
-    MobileLink: string,
-    Link: string
-
-}

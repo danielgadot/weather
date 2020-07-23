@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ApiService} from "../api.service";
-import {Store} from "@ngrx/store";
+import { ApiService } from "../api.service";
+import { Store } from "@ngrx/store";
 import * as WeatherActions from "../store/actions/weather.actions";
 
 @Component({
@@ -13,15 +13,14 @@ export class SearchComponent implements OnInit {
   constructor(private apiService: ApiService, private store: Store) { }
 
   ngOnInit(): void {
-    // this.apiService.searchLocation().subscribe((res) => console.log(' res :: ', res))
   }
 
-  searchCity(val) {
-    console.log('searchVal :: ', this.searchVal);
-    
-    this.store.dispatch(WeatherActions.searchCity({
-      searchWord: this.searchVal,
-    }))
+  searchCity() {
+    this.store.dispatch(
+      WeatherActions.searchCity({
+        searchWord: this.searchVal,
+      })
+    )
   }
 
 }

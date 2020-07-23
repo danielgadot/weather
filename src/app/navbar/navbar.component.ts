@@ -15,7 +15,5 @@ export class NavbarComponent implements OnInit {
 
   constructor(public route: ActivatedRoute) { }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
