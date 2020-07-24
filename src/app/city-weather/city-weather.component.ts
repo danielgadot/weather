@@ -19,6 +19,9 @@ export class CityWeatherComponent implements OnInit {
   temperature$: Subject<any> = new Subject<any>();
   city$: Observable<any>;
   forecastDays$: Observable<any>;
+  isFavorite$: Observable<boolean>;
+  // get from store
+  cityKey: number = 215854;
 
   ngOnInit(): void {
     // this.store.dispatch(WeatherActions.searchCity({ id: 215854 }))
@@ -27,8 +30,17 @@ export class CityWeatherComponent implements OnInit {
       select('weather', 'currentCityWeather'),
 
       map((res: CityWeather) => {
-        console.log('city$ :: ', res)
+        console.log('city$ :: ', res);
         if (res) {
+          this.isFavorite$ = this.store.pipe(
+            select('weather', 'favorites'),
+            tap((favoriteCities: Number[]) => {
+              console.log('favoriteCities :: ', favoriteCities)
+              console.log('favoriteCities :: ', favoriteCities.includes(this.cityKey) ? true : false)
+            
+            }),
+            map((cities: Number[]) => cities.includes(this.cityKey) ? true : false )
+            )
           return res.Temperature.Metric.Value
         } else {
           console.log('city$ :: ', res)
@@ -47,12 +59,19 @@ export class CityWeatherComponent implements OnInit {
       )
   }
 
-  addToFav() {
+  addRemoveFavorite(operation) {
+    if (operation === 'add') {
     this.store.dispatch(WeatherActions.addToFav({
-      city: 'new city',
-      temperature: -2,
-      desc: 'Sunny'
+      // change later when tou have da city key
+      cityKey: this.cityKey,
     }))
+    } else if ('remove') {
+      this.store.dispatch(WeatherActions.removeFromFav({
+        // change later when tou have da city key
+        cityKey: this.cityKey,
+      }))
+    }
+
   }
 
 }

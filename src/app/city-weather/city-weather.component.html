@@ -12,8 +12,9 @@
 
     </div>
     <div class="right">
-      <img src="./../../assets/img/unfavorite.svg" alt="">
-      <button class="start-btn" (click)="addToFav()">Add Tof Favorites</button>
+      <img *ngIf="!(isFavorite$ | async)" src="./../../assets/img/unfavorite.svg" alt="" (click)="addRemoveFavorite('add')">
+      <img *ngIf="(isFavorite$ | async)"  src="./../../assets/img/favorite.svg" alt="" (click)="addRemoveFavorite('remove')">
+      isFavorite :: {{isFavorite$ | async}}
     </div>
   </div>
 

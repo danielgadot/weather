@@ -62,7 +62,7 @@ export class WeatherEffects {
         map((res) => { return this.apiService.getForecast(res.id).pipe(
         tap((forecastDays) => { 
           console.log('forecastDays :: ', forecastDays)
-          this.store.dispatch(setForecastDays({ forecastDays: forecastDays.DailyForecasts })); 
+          this.store.dispatch(setForecastDays({ forecastDays: (forecastDays as any).DailyForecasts })); 
           }),
 
         ).subscribe() }),

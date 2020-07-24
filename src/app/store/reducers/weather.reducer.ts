@@ -10,7 +10,7 @@ interface Weather {
 export interface State extends Weather{
     currentCityWeather: CityWeather;
     currentCity: any;
-    favorites: any[];
+    favorites: number[];
     loading: boolean;
     loaded: boolean;
     forecastDays: any[];
@@ -25,18 +25,7 @@ export const initialState: State = {
       }
     },
     currentCity: {},
-    favorites: [
-      {
-        city: 'Tel Aviv',
-        temperature: 38,
-        desc: 'Sunny'
-      },
-      {
-        city: 'Madrid',
-        temperature: 22,
-        desc: 'Sunny'
-      }
-    ],
+    favorites: [],
     loading: false,
     loaded: false,
     forecastDays: []
@@ -95,14 +84,17 @@ const _weatherReducer = createReducer(
 
 
 function addToFavReducer(state, payload) {
+  console.log(' payload in add :: ', payload);
+  
   let newFavs = Object.assign([], state.favorites);
-  newFavs.push(payload)
+  newFavs.push(payload.cityKey)
   return newFavs;
 }
 
 function removeFromFavReducer(state, payload) {
+  console.log(' payload in remove :: ', payload);
   let newFavs = Object.assign([], state.favorites);
-  newFavs = newFavs.filter(city => city !== payload)
+  newFavs = newFavs.filter(key => key !== payload.cityKey)
   return newFavs;
 }
 
