@@ -8,3 +8,11 @@
  src="./../../assets/img/search.svg" 
  class="icon-search" 
  (click)="searchCity()">
+<div *ngIf="citiesFound$ | async as citiesFound">
+    <ul class="cities-found-ul" *ngIf="citiesFound.length > 0">
+        <li *ngFor="let city of citiesFound" class="city-found" (click)="onClickCity(city)"> 
+            <span>{{city.LocalizedName}}</span>
+            <span>{{city.Country.LocalizedName}}</span>
+        </li>
+    </ul>
+</div>

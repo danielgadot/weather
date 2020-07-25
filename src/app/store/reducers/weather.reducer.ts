@@ -5,15 +5,20 @@ import { CityWeather } from '../../models/city-weather.model';
 interface Weather {
   weather?: any;
 }
+interface CurrentCity {
+  id: number;
+  name: string;
+  weather: any;
+}
 
-
-export interface State extends Weather{
+export interface State extends Weather {
     currentCityWeather: CityWeather;
-    currentCity: any;
+    currentCity: CurrentCity;
     favorites: number[];
     loading: boolean;
     loaded: boolean;
     forecastDays: any[];
+    citiesFound: any[];
 }
 
 export const initialState: State = {
@@ -24,11 +29,16 @@ export const initialState: State = {
         }
       }
     },
-    currentCity: {},
+    currentCity: {
+      id: 215854,
+      name: 'Tel Aviv',
+      weather: {}
+    },
     favorites: [],
     loading: false,
     loaded: false,
-    forecastDays: []
+    forecastDays: [],
+    citiesFound: []
 };
 
 export function weatherReducer(state: State | undefined, action: Action) {
@@ -49,23 +59,29 @@ const _weatherReducer = createReducer(
       favorites: removeFromFavReducer(state, payload),
     }
   }),
-  on(WeatherActions.searchCity, (state, payload) => {
-    return {
-      ...state,
-      currentCity: searchCityReducer(state, payload),
-      loading: true
-    }
-  }),
+  // on(WeatherActions.searchCity, (state, payload) => {
+  //   return {
+  //     ...state,
+  //     currentCity: searchCityReducer(state, payload),
+  //     loading: true
+  //   }
+  // }),
   on(WeatherActions.fetchedCitySuccess, (state, payload) => {
+    console.log(' payload :: ', payload)
     return {
       ...state,
       currentCityWeather: payload.data,
+      currentCity: {
+        id: 215854,
+        name: 'Tel Aviv',
+        weather: { WeatherText: payload.data.WeatherText, temperature: payload.data.Temperature.Metric.Value}
+      },
       loading: false,
       loaded: true
     }
   }),
   on(WeatherActions.getForecastDays, (state, payload) => {
-    
+
     return {
       ...state,
       forecastDays: [],
@@ -77,6 +93,13 @@ const _weatherReducer = createReducer(
       ...state,
       forecastDays: payload.forecastDays,
     }
+  }),
+  on(WeatherActions.setSearchResult, (state, payload) => {
+    console.log('payload cities:: ', payload);
+    return {
+      ...state,
+      citiesFound: payload.cities,
+    }
   })
 );
 
@@ -85,7 +108,7 @@ const _weatherReducer = createReducer(
 
 function addToFavReducer(state, payload) {
   console.log(' payload in add :: ', payload);
-  
+
   let newFavs = Object.assign([], state.favorites);
   newFavs.push(payload.cityKey)
   return newFavs;

@@ -7,3 +7,20 @@
   position: relative;
   top: -2px;
 }
+
+.cities-found-ul {
+  list-style-type: none;
+  border: 1px solid black;
+  padding: 7px;
+}
+
+.city-found {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &:hover {
+    cursor: pointer;
+    background-color: grey;
+  }
+}

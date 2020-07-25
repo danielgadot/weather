@@ -15,7 +15,7 @@ import { State } from '../store/reducers/weather.reducer';
 export class CityWeatherComponent implements OnInit {
 
   constructor(private apiService: ApiService, private store: Store<State>) { }
-  
+
   temperature$: Subject<any> = new Subject<any>();
   city$: Observable<any>;
   forecastDays$: Observable<any>;
@@ -24,10 +24,10 @@ export class CityWeatherComponent implements OnInit {
   cityKey: number = 215854;
 
   ngOnInit(): void {
-    // this.store.dispatch(WeatherActions.searchCity({ id: 215854 }))
+    this.store.dispatch(WeatherActions.searchCityById({ id: 215854 }))
 
     this.city$ = this.store.pipe(
-      select('weather', 'currentCityWeather'),
+      select('weather', 'currentCity'),
 
       map((res: CityWeather) => {
         console.log('city$ :: ', res);
@@ -36,12 +36,12 @@ export class CityWeatherComponent implements OnInit {
             select('weather', 'favorites'),
             tap((favoriteCities: Number[]) => {
               console.log('favoriteCities :: ', favoriteCities)
-              console.log('favoriteCities :: ', favoriteCities.includes(this.cityKey) ? true : false)
-            
+              console.log('favoriteCities :: ', favoriteCities.includes(this.cityKey))
+
             }),
-            map((cities: Number[]) => cities.includes(this.cityKey) ? true : false )
+            map((cities: Number[]) => cities.includes(this.cityKey) )
             )
-          return res.Temperature.Metric.Value
+          return res
         } else {
           console.log('city$ :: ', res)
         }

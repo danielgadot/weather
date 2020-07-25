@@ -10,18 +10,17 @@ import {Observable} from "rxjs";
 })
 export class FavoritesComponent implements OnInit {
 
-  favorites = [1, 2, 3];
   favorites$: Observable<any>
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.favorites$ = this.store.pipe(
-      select(store => store),
-      map((res: Store) => {
-        console.log('favorites$ :: ', res)
-        return (res as any).weatherStore.favorites
-      }),
-    );
+    // this.favorites$ = this.store.pipe(
+    //   select('weather', 'favorites'),
+    //   map((favorites: number[]) => {
+    //     console.log('favorites$ :: ', favorites)
+    //     return favorites;
+    //   }),
+    // );
   }
 
 }

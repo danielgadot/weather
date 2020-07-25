@@ -14,7 +14,8 @@
       {{day.Temperature.Maximum.Value}}
     </p> -->
     <p class="card-text">
-      {{day.Temperature.Minimum.Value}} - {{day.Temperature.Maximum.Value}}
+      <img src="./../../assets/img/rain.svg" alt="">
+      {{fahrenheitToCelsius(day.Temperature.Minimum.Value)}} - {{fahrenheitToCelsius(day.Temperature.Maximum.Value)}}
     </p>
   </div>
 </div>

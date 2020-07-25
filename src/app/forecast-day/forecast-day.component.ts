@@ -12,7 +12,10 @@ export class ForecastDayComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('day ::', this.day);
-    
+  }
+
+  fahrenheitToCelsius(fahrenheit) {
+    return parseInt(String((fahrenheit - 32) * 5 / 9));
   }
 
 }

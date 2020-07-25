@@ -5,9 +5,12 @@
 
   </div>
 
-    <div class="middle">
-      <span>{{ city$ | async}}</span>
-      <span>{{ temperature$ | async }} C</span>
+    <div class="middle" *ngIf="city$ | async as city">
+      <div class="city-current-weather">
+        <span>{{ city.name}}</span>
+        <span>{{ city.weather.temperature }} C</span>
+      </div>
+      <span><img src="./../../assets/img/sunny.svg" alt=""></span>
 
 
     </div>
@@ -19,7 +22,7 @@
   </div>
 
   <div class="center">
-    <h2>Scattered clouds</h2>
+    <h2>{{ (city$ | async).weather.WeatherText }}</h2>
   </div>
   <div class="bottom forecast-days-wrap">
     <div *ngFor="let day of forecastDays$ | async" class="day">
