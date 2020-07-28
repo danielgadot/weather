@@ -17,10 +17,6 @@ export class WeatherEffects {
         ofType(searchCity),
         tap((res) => { console.log('new getCurrentWeather$ occurred in queue', res) }),
         switchMap((action: CityWeather) => {
-          // const cachedCity = JSON.parse(localStorage.getItem('city'));
-          // if (cachedCity && !(action as any).payload.searchWord) {
-          //   this.cacheCityStream(cachedCity)
-          // }
           return this.searchLocationStream(action)
         })
     ));
@@ -30,7 +26,7 @@ export class WeatherEffects {
       ofType(searchCityById),
       tap((res) => { console.log('new  bt idgetCurrentWeather$', res) }),
       map((action: any) => {
-        this.getCurrentWeather(action.id);
+        this.getCurrentWeather(action);
         return {type: 'loading city current weather'}
       })
     ));
@@ -50,20 +46,14 @@ export class WeatherEffects {
           console.log('city search :: ', citiesFound);
           this.store.dispatch(setSearchResult({ cities: citiesFound }))
           return {type: 'dispatched cities found'}
-          // if (city) {
-            // const cityStr = JSON.stringify(city[0]);
-            // localStorage.setItem('city', cityStr);
-
-            // return this.getCurrentWeather(city[0].Key)
-          // }
         })
       )
     }
 
-    private getCurrentWeather(cityKey) {
-      return this.apiService.getCurrentWeather(cityKey).pipe(
+    private getCurrentWeather(action) {
+      return this.apiService.getCurrentWeather(action.id).pipe(
         tap((resData) => { console.log('resData :: ', resData) }),
-        map(resData => this.store.dispatch(fetchedCitySuccess({ data: resData[0] }))),
+        map(resData => this.store.dispatch(fetchedCitySuccess({ data: resData[0], cityKey: action.id, cityName:  action.name}))),
         catchError(error => of(console.log(' err :: ', error))),
         tap(() => { console.log('getCurrentWeather Finished from server') })
       ).subscribe()

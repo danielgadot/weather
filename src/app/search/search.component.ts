@@ -4,6 +4,7 @@ import { Store, select } from "@ngrx/store";
 import * as WeatherActions from "../store/actions/weather.actions";
 import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
+import { State } from '../store/reducers/weather.reducer';
 
 @Component({
   selector: 'search',
@@ -14,7 +15,7 @@ export class SearchComponent implements OnInit {
   searchVal = '';
   citiesFound$: Observable<any>;
 
-  constructor(private apiService: ApiService, private store: Store) { }
+  constructor(private apiService: ApiService, private store: Store<State>) { }
 
   ngOnInit(): void {
     this.citiesFound$ = this.store.pipe(
@@ -35,11 +36,16 @@ export class SearchComponent implements OnInit {
   }
 
   onClickCity(city) {
-    console.log(' ');
+    console.log('city $$$$$$$$$$$$ ', city);
     
+    this.searchVal = '';
+    this.store.dispatch(
+      WeatherActions.removeCitiesFound({})
+    )
     this.store.dispatch(
       WeatherActions.searchCityById({
         id: city.Key,
+        name: city.LocalizedName
       })
     )
   }

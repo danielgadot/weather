@@ -8,6 +8,7 @@ export const fetchedCitySuccess = createAction('[city-weather Component] fetched
 export const getForecastDays = createAction('[city-weather Component] getForecastDays', props<any>());
 export const setForecastDays = createAction('[weather Effect] setForecastDays', props<any>());
 export const setSearchResult = createAction('[weather Effect] setSearchResult', props<any>());
+export const removeCitiesFound = createAction('[search Component] removeCitiesFound', props<any>());
 // Actions to add
 
 // save favorites to localStorage

@@ -2,15 +2,17 @@
   padding: 10px;
 }
 .icon-search {
-  border: 1px solid black;
+  border: 1px solid white;
   padding: 10px;
   position: relative;
   top: -2px;
+  background-color: white;
 }
 
 .cities-found-ul {
   list-style-type: none;
-  border: 1px solid black;
+  border: 1px solid grey;
+  background-color: white;
   padding: 7px;
 }
 

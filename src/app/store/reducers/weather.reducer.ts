@@ -59,21 +59,13 @@ const _weatherReducer = createReducer(
       favorites: removeFromFavReducer(state, payload),
     }
   }),
-  // on(WeatherActions.searchCity, (state, payload) => {
-  //   return {
-  //     ...state,
-  //     currentCity: searchCityReducer(state, payload),
-  //     loading: true
-  //   }
-  // }),
   on(WeatherActions.fetchedCitySuccess, (state, payload) => {
-    console.log(' payload :: ', payload)
     return {
       ...state,
       currentCityWeather: payload.data,
       currentCity: {
-        id: 215854,
-        name: 'Tel Aviv',
+        id: parseInt(payload.cityKey),
+        name: payload.cityName || 'Tel Aviv',
         weather: { WeatherText: payload.data.WeatherText, temperature: payload.data.Temperature.Metric.Value}
       },
       loading: false,
@@ -88,17 +80,21 @@ const _weatherReducer = createReducer(
     }
   }),
   on(WeatherActions.setForecastDays, (state, payload) => {
-    console.log('payload ForecastDays:: ', payload);
     return {
       ...state,
       forecastDays: payload.forecastDays,
     }
   }),
   on(WeatherActions.setSearchResult, (state, payload) => {
-    console.log('payload cities:: ', payload);
     return {
       ...state,
       citiesFound: payload.cities,
+    }
+  }),
+  on(WeatherActions.removeCitiesFound, (state, payload) => {
+    return {
+      ...state,
+      citiesFound: [],
     }
   })
 );
@@ -107,7 +103,6 @@ const _weatherReducer = createReducer(
 
 
 function addToFavReducer(state, payload) {
-  console.log(' payload in add :: ', payload);
 
   let newFavs = Object.assign([], state.favorites);
   newFavs.push(payload.cityKey)
@@ -115,7 +110,6 @@ function addToFavReducer(state, payload) {
 }
 
 function removeFromFavReducer(state, payload) {
-  console.log(' payload in remove :: ', payload);
   let newFavs = Object.assign([], state.favorites);
   newFavs = newFavs.filter(key => key !== payload.cityKey)
   return newFavs;

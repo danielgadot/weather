@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import {select, Store} from "@ngrx/store";
+import {map} from "rxjs/operators";
+import {Observable} from "rxjs";
+import {State} from "./store/reducers/weather.reducer";
 
 @Component({
   selector: 'app-root',
@@ -6,7 +10,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor() {}
+
+  loading$: Observable<boolean>;
+
+  constructor(private store: Store<State>) {
+    this.loading$ = this.store.pipe(
+      select('weather', 'loaded'),
+      )
+  }
 }
 
 
