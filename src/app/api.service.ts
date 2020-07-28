@@ -22,8 +22,6 @@ export class ApiService {
   }
 
   getForecast(locationKey) {
-    console.log('getLocation Service :: ', locationKey);
-    
     return this.http.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}`, { params: { apikey: API_KEY }})
   }
 }

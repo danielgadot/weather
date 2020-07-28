@@ -9,6 +9,7 @@ import { weatherReducer } from './store/reducers/weather.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { WeatherEffects } from './weather.effects';
+import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -49,6 +50,14 @@ const routes: Routes = [
     }),
     FormsModule,
     EffectsModule.forRoot([WeatherEffects]),
+    // StoreModule.forRoot({
+    //   router: routerReducer,
+    // }),
+    // RouterModule.forRoot([
+    //   // routes
+    // ]),
+    // // Connects RouterModule with StoreModule, uses MinimalRouterStateSerializer by default
+    // StoreRouterConnectingModule.forRoot(),
   ],
   providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
   bootstrap: [AppComponent]

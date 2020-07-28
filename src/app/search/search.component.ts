@@ -20,7 +20,6 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     this.citiesFound$ = this.store.pipe(
       select('weather', 'citiesFound'),
-      tap(cities => console.log('cities found in search component :: ', cities)),
       map(cities => cities)
       )
 
@@ -36,8 +35,7 @@ export class SearchComponent implements OnInit {
   }
 
   onClickCity(city) {
-    console.log('city $$$$$$$$$$$$ ', city);
-    
+
     this.searchVal = '';
     this.store.dispatch(
       WeatherActions.removeCitiesFound({})

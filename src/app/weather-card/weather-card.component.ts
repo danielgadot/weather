@@ -12,8 +12,6 @@ export class WeatherCardComponent implements OnInit {
   @Input() weatherData;
 
   ngOnInit(): void {
-    console.log('weatherData :: ', this.weatherData);
-    
   }
 
   fahrenheitToCelsius(fahrenheit) {

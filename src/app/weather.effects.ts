@@ -26,7 +26,6 @@ export class WeatherEffects {
   getCurrentWeather$ = createEffect(
     (): any => this.actions$.pipe(
         ofType(searchCity),
-        tap((res) => { console.log('new getCurrentWeather$ occurred in queue', res) }),
         switchMap((action: CityWeather) => {
           return this.searchLocationStream(action)
         })
@@ -35,7 +34,6 @@ export class WeatherEffects {
   getCurrentWeatherbyId$ = createEffect(
     (): any => this.actions$.pipe(
       ofType(searchCityById),
-      tap((res) => { console.log('new  bt idgetCurrentWeather$', res) }),
       map((action: any) => {
         this.getCurrentWeather(action);
         return {type: 'loading city current weather'}
@@ -47,20 +45,10 @@ export class WeatherEffects {
       this.store.dispatch(setFavorites({ favorites }))
       return { type: '[UserEffects]: Init' };
     }
-    // private cacheCityStream(cachedCity) {
-    //   return of(cachedCity).pipe(
-    //     map(resData => this.store.dispatch(fetchedCitySuccess({ data: [resData] }))),
-    //     catchError(error => of(console.log(' err :: ', error))),
-    //     tap(() => { console.log('getCurrentWeather Finished fetching from local storage') })
-    //   )
-    // }
-
 
     private searchLocationStream(action) {
-      console.log('action in searchLocation :: ', action)
       return this.apiService.searchLocation(action.searchWord).pipe(
         map((citiesFound) => {
-          console.log('city search :: ', citiesFound);
           this.store.dispatch(setSearchResult({ cities: citiesFound }))
           return {type: 'dispatched cities found'}
         })
@@ -69,18 +57,7 @@ export class WeatherEffects {
 
     private getCurrentWeather(action) {
       return this.apiService.getCurrentWeather(action.id).pipe(
-        tap((resData) => { console.log('resData :: ', resData) }),
         map(cities => cities[0]),
-        tap((city) => { console.log('%c city in effect :: ', 'color: red;font-size:16px', city) }),
-        tap((city) => { console.log('%c action :: ', 'color: red;font-size:16px', action) }),
-        // id: 215854,
-        // date: 'day.Date',
-        // weatherText: 'day.Day.IconPhrase',
-        // name: 'Tel Aviv',
-        // temperature: {
-        // min: 0,
-        //   max: 0
-      // }
         map(city => this.store.dispatch(fetchedCitySuccess({
           id: action.id,
           name:  action.name,
@@ -92,7 +69,6 @@ export class WeatherEffects {
           weatherText: city.WeatherText
         }))),
         catchError(error => of(console.log(' err :: ', error))),
-        tap(() => { console.log('getCurrentWeather Finished from server') })
       ).subscribe()
     }
 
@@ -105,7 +81,6 @@ export class WeatherEffects {
         map(forecastDays => {
           let newForecastDays;
           if (forecastDays) {
-            console.log('forecastDays :: ', forecastDays);
             newForecastDays = forecastDays.map(day => {
               return {
                 date: day.Date,
@@ -116,12 +91,10 @@ export class WeatherEffects {
                 }
               }
             })
-            console.log('newForecastDays :: ', newForecastDays);
           }
           return newForecastDays
         }),
           tap((forecastDays) => {
-            console.log('forecastDays :: ', forecastDays)
             this.store.dispatch(setForecastDays({ forecastDays }));
           }),
         ).subscribe() }),

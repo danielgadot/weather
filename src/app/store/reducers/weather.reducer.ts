@@ -60,7 +60,6 @@ const _weatherReducer = createReducer(
     }
   }),
   on(WeatherActions.fetchedCitySuccess, (state, payload) => {
-    console.log('%c payload in fetch :: ', 'color: red;font-size:16px', payload);
     return {
       ...state,
       currentCity: payload,
@@ -105,7 +104,6 @@ const _weatherReducer = createReducer(
 
 
 function addToFavReducer(state, payload) {
-  console.log('%c payload :: ', 'color: red;font-size:16px', payload);
   let newFavs = Object.assign([], state.favorites);
   newFavs.push(payload.city);
   localStorage.setItem('favorites', JSON.stringify(newFavs));
@@ -113,8 +111,6 @@ function addToFavReducer(state, payload) {
 }
 
 function removeFromFavReducer(state, payload) {
-  console.log('removeFromFavReducer payload :: ', payload);
-  
   let newFavs = Object.assign([], state.favorites);
   newFavs = newFavs.filter(city => city.id !== payload.city.id);
   localStorage.setItem('favorites', JSON.stringify(newFavs));

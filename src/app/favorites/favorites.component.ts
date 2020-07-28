@@ -18,7 +18,6 @@ export class FavoritesComponent implements OnInit {
     this.favorites$ = this.store.pipe(
       select('weather', 'favorites'),
       map((favorites: any[]) => {
-        console.log('favorites$ :: ', favorites)
         return favorites;
       }),
     );
