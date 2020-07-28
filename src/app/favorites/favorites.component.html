@@ -1,6 +1,7 @@
 <div class="wrapper">
 
   <div *ngFor="let fav of favorites$ | async" >
-    <day-weather [day]="fav"></day-weather>
+    <weather-card [weatherData]="fav"></weather-card>
   </div>
 </div>
+<pre>{{favorites$ | async | json}}</pre>

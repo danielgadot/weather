@@ -5,15 +5,17 @@ import { CityWeather } from '../../models/city-weather.model';
 interface Weather {
   weather?: any;
 }
-interface CurrentCity {
+
+interface City {
   id: number;
   name: string;
-  weather: any;
+  temperature: any;
+  date: string;
+  weatherText: any;
 }
 
 export interface State extends Weather {
-    currentCityWeather: CityWeather;
-    currentCity: CurrentCity;
+    currentCity: City;
     favorites: number[];
     loading: boolean;
     loaded: boolean;
@@ -22,23 +24,21 @@ export interface State extends Weather {
 }
 
 export const initialState: State = {
-    currentCityWeather: {
-      Temperature: {
-        Metric: {
-          Value: 25
-        }
-      }
-    },
     currentCity: {
       id: 215854,
+      date: 'day.Date',
+      weatherText: 'Tel Aviv',
       name: 'Tel Aviv',
-      weather: {}
+      temperature: {
+        min: 0,
+        max: 0
+      }
     },
     favorites: [],
     loading: false,
     loaded: false,
     forecastDays: [],
-    citiesFound: []
+    citiesFound: [],
 };
 
 export function weatherReducer(state: State | undefined, action: Action) {
@@ -60,14 +60,10 @@ const _weatherReducer = createReducer(
     }
   }),
   on(WeatherActions.fetchedCitySuccess, (state, payload) => {
+    console.log('%c payload in fetch :: ', 'color: red;font-size:16px', payload);
     return {
       ...state,
-      currentCityWeather: payload.data,
-      currentCity: {
-        id: parseInt(payload.cityKey),
-        name: payload.cityName || 'Tel Aviv',
-        weather: { WeatherText: payload.data.WeatherText, temperature: payload.data.Temperature.Metric.Value}
-      },
+      currentCity: payload,
       loading: false,
       loaded: true
     }
@@ -96,6 +92,12 @@ const _weatherReducer = createReducer(
       ...state,
       citiesFound: [],
     }
+  }),
+  on(WeatherActions.setFavorites, (state, payload) => {
+    return {
+      ...state,
+      favorites: payload.favorites,
+    }
   })
 );
 
@@ -103,15 +105,19 @@ const _weatherReducer = createReducer(
 
 
 function addToFavReducer(state, payload) {
-
+  console.log('%c payload :: ', 'color: red;font-size:16px', payload);
   let newFavs = Object.assign([], state.favorites);
-  newFavs.push(payload.cityKey)
+  newFavs.push(payload.city);
+  localStorage.setItem('favorites', JSON.stringify(newFavs));
   return newFavs;
 }
 
 function removeFromFavReducer(state, payload) {
+  console.log('removeFromFavReducer payload :: ', payload);
+  
   let newFavs = Object.assign([], state.favorites);
-  newFavs = newFavs.filter(key => key !== payload.cityKey)
+  newFavs = newFavs.filter(city => city.id !== payload.city.id);
+  localStorage.setItem('favorites', JSON.stringify(newFavs));
   return newFavs;
 }
 

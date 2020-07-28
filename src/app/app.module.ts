@@ -15,13 +15,12 @@ import { HomeComponent } from './home/home.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { SearchComponent } from './search/search.component';
 import { CityWeatherComponent } from './city-weather/city-weather.component';
-import { DayWeatherComponent } from './day-weather/day-weather.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Routes, RouterModule } from "@angular/router";
 import {LocationStrategy, Location, PathLocationStrategy} from '@angular/common';
-import { ForecastDayComponent } from './forecast-day/forecast-day.component';
 import { FormsModule } from "@angular/forms";
+import { WeatherCardComponent } from './weather-card/weather-card.component';
 
 
 const routes: Routes = [
@@ -35,9 +34,8 @@ const routes: Routes = [
     FavoritesComponent,
     SearchComponent,
     CityWeatherComponent,
-    DayWeatherComponent,
     NavbarComponent,
-    ForecastDayComponent
+    WeatherCardComponent
   ],
   imports: [
     BrowserModule,

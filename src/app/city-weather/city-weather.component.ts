@@ -3,7 +3,7 @@ import { ApiService } from "../api.service";
 import { CityWeather } from '../models/city-weather.model';
 import {Observable, Subject} from "rxjs";
 import { Store, select } from "@ngrx/store";
-import { tap, map } from 'rxjs/operators';
+import {tap, map, switchMap} from 'rxjs/operators';
 import * as WeatherActions from '../store/actions/weather.actions';
 import { State } from '../store/reducers/weather.reducer';
 
@@ -22,24 +22,27 @@ export class CityWeatherComponent implements OnInit {
   isFavorite$: Observable<boolean>;
   // get from store
   cityKey: number = 215854;
-
+  city;
   ngOnInit(): void {
-    this.store.dispatch(WeatherActions.searchCityById({ id: 215854 }))
+    this.store.dispatch(WeatherActions.searchCityById({ id: 215854, name: 'Tel Aviv' }))
 
     this.city$ = this.store.pipe(
       select('weather', 'currentCity'),
 
       map((res: CityWeather) => {
-        console.log('city$ :: ', res);
+        console.log('city$ $$$$$$$$$$$$$$$$$$$$$$$$$$$ :: ', res);
         if (res) {
+          this.city = res;
           this.isFavorite$ = this.store.pipe(
             select('weather', 'favorites'),
-            tap((favoriteCities: Number[]) => {
-              console.log('favoriteCities :: ', favoriteCities)
-              console.log('favoriteCities :: ', favoriteCities.includes(this.cityKey))
-
+            map((favoriteCities: any[]) => {
+              console.log('favoriteCities :: ', favoriteCities);
+              console.log('this.city :: ', this.city);
+              console.log('favoriteCities.filter(city => city.id === this.city.id); :: ', favoriteCities.filter(city => city.id === this.city.id))
+              const isfav = favoriteCities.filter(city => city.id === this.city.id);
+              return isfav.length > 0;
             }),
-            map((cities: Number[]) => cities.includes(this.cityKey) )
+            // map((cities: any[]) => cities.includes(this.city.id) )
             )
           return res
         } else {
@@ -60,15 +63,16 @@ export class CityWeatherComponent implements OnInit {
   }
 
   addRemoveFavorite(operation) {
+    console.log('%c this.city$ :: ', 'color: red;font-size:16px', this.city);
     if (operation === 'add') {
-    this.store.dispatch(WeatherActions.addToFav({
-      // change later when tou have da city key
-      cityKey: this.cityKey,
-    }))
+      this.store.dispatch(WeatherActions.addToFav({
+        // change later when tou have da city key
+        city: this.city,
+      }))
     } else if ('remove') {
       this.store.dispatch(WeatherActions.removeFromFav({
         // change later when tou have da city key
-        cityKey: this.cityKey,
+        city: this.city,
       }))
     }
 

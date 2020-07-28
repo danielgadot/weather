@@ -9,6 +9,7 @@ export const getForecastDays = createAction('[city-weather Component] getForecas
 export const setForecastDays = createAction('[weather Effect] setForecastDays', props<any>());
 export const setSearchResult = createAction('[weather Effect] setSearchResult', props<any>());
 export const removeCitiesFound = createAction('[search Component] removeCitiesFound', props<any>());
+export const setFavorites = createAction('[weather effect] setFavorites', props<any>());
 // Actions to add
 
 // save favorites to localStorage
