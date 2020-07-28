@@ -14,7 +14,6 @@ export class FavoritesComponent implements OnInit {
   constructor(private store: Store) { }
 
   ngOnInit(): void {
-    // this.favorites$ = of(JSON.parse(localStorage.getItem('favorites')));
     this.favorites$ = this.store.pipe(
       select('weather', 'favorites'),
       map((favorites: any[]) => {

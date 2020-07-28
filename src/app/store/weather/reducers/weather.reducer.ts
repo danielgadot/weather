@@ -2,6 +2,9 @@ import { Action, createReducer, on } from '@ngrx/store';
 import * as WeatherActions from '../actions/weather.actions';
 import { CityWeather } from '../../../models/city-weather.model';
 
+export const weatherFeatureKey = 'weather';
+
+
 interface Weather {
   weather?: any;
 }
@@ -14,7 +17,7 @@ interface City {
   weatherText: any;
 }
 
-export interface State extends Weather {
+export interface State  extends Weather{
     currentCity: City;
     favorites: number[];
     loading: boolean;
@@ -24,6 +27,7 @@ export interface State extends Weather {
 }
 
 export const initialState: State = {
+
     currentCity: {
       id: 215854,
       date: 'day.Date',

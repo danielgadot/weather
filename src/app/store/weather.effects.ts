@@ -18,10 +18,19 @@ import { of, Observable } from "rxjs";
 import { CityWeather } from '../models/city-weather.model';
 import { State } from './weather/reducers/weather.reducer';
 import { Store, select } from "@ngrx/store";
+import * as WeatherActions from "./weather/actions/weather.actions";
 
 @Injectable()
 export class WeatherEffects {
   constructor(private apiService: ApiService, private actions$: Actions, private store: Store<State>) {}
+
+    ngrxOnInitEffects(): Action {
+      const favorites = JSON.parse(localStorage.getItem('favorites'));
+      this.store.dispatch(setFavorites({ favorites }))
+      this.store.dispatch(WeatherActions.searchCityById({ id: 215854, name: 'Tel Aviv' }));
+      this.store.dispatch(WeatherActions.getForecastDays({ id: 215854 }))
+      return { type: '[UserEffects]: Init' };
+    }
 
   getCurrentWeather$ = createEffect(
     (): any => this.actions$.pipe(
@@ -40,11 +49,6 @@ export class WeatherEffects {
       })
     ));
 
-    ngrxOnInitEffects(): Action {
-      const favorites = JSON.parse(localStorage.getItem('favorites'));
-      this.store.dispatch(setFavorites({ favorites }))
-      return { type: '[UserEffects]: Init' };
-    }
 
     private searchLocationStream(action) {
       return this.apiService.searchLocation(action.searchWord).pipe(
