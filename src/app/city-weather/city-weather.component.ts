@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from "../api.service";
+import { ApiService } from "../services/api.service";
 import { CityWeather } from '../models/city-weather.model';
 import {Observable, Subject} from "rxjs";
 import { Store, select } from "@ngrx/store";
 import {tap, map, switchMap} from 'rxjs/operators';
-import * as WeatherActions from '../store/actions/weather.actions';
-import { State } from '../store/reducers/weather.reducer';
+import * as WeatherActions from '../store/weather/actions/weather.actions';
+import { State } from '../store/weather/reducers/weather.reducer';
 
 @Component({
   selector: 'city-weather',

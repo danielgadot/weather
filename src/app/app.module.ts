@@ -4,11 +4,11 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment'; // Angular CLI environment
 
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './store/reducers';
-import { weatherReducer } from './store/reducers/weather.reducer';
+import { reducers, metaReducers } from './store/weather/reducers';
+import { weatherReducer } from './store/weather/reducers/weather.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { WeatherEffects } from './weather.effects';
+import { WeatherEffects } from './store/weather.effects';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 
 import { AppComponent } from './app.component';
@@ -50,14 +50,6 @@ const routes: Routes = [
     }),
     FormsModule,
     EffectsModule.forRoot([WeatherEffects]),
-    // StoreModule.forRoot({
-    //   router: routerReducer,
-    // }),
-    // RouterModule.forRoot([
-    //   // routes
-    // ]),
-    // // Connects RouterModule with StoreModule, uses MinimalRouterStateSerializer by default
-    // StoreRouterConnectingModule.forRoot(),
   ],
   providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
   bootstrap: [AppComponent]

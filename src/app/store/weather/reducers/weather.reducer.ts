@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as WeatherActions from '../actions/weather.actions';
-import { CityWeather } from '../../models/city-weather.model';
+import { CityWeather } from '../../../models/city-weather.model';
 
 interface Weather {
   weather?: any;

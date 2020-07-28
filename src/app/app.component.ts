@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {select, Store} from "@ngrx/store";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
-import {State} from "./store/reducers/weather.reducer";
+import {State} from "./store/weather/reducers/weather.reducer";
 
 @Component({
   selector: 'app-root',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import {switchMap, map, tap, catchError, mergeMap} from 'rxjs/operators';
-import { ApiService } from './api.service';
+import { ApiService } from '../services/api.service';
 import {
   searchCity,
   addToFav,
@@ -13,10 +13,10 @@ import {
   searchCityById,
   setSearchResult,
   setFavorites
-} from './store/actions/weather.actions';
+} from './weather/actions/weather.actions';
 import { of, Observable } from "rxjs";
-import { CityWeather } from './models/city-weather.model';
-import { State } from './store/reducers/weather.reducer';
+import { CityWeather } from '../models/city-weather.model';
+import { State } from './weather/reducers/weather.reducer';
 import { Store, select } from "@ngrx/store";
 
 @Injectable()
