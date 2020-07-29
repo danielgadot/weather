@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../services/api.service";
-import { CityWeather } from '../models/city-weather.model';
+import { City } from '../models/city.model';
 import { Observable, Subject } from "rxjs";
 import { Store, select } from "@ngrx/store";
 import { tap, map, switchMap } from 'rxjs/operators';
@@ -18,16 +18,15 @@ export class CityWeatherComponent implements OnInit {
 
   city$: Observable<any>;
   forecastDays$: Observable<any>;
-  isFavorite$: Observable<boolean>;
-  // get from store
   city;
   ngOnInit(): void {
 
     this.city$ = this.store.pipe(
       select('weather', 'currentCity'),
-      map((currentCity: CityWeather) => {
+      map((currentCity: City) => {
+        console.log('%c currentCity :: ', 'color: red;font-size:16px', currentCity);
           this.city = currentCity;
-          this.isFavorite$ = this.streamFavorites();
+          // this.isFavorite$ = this.streamFavorites();
           return currentCity;
       }),
     );
@@ -51,19 +50,7 @@ export class CityWeatherComponent implements OnInit {
       }))
     }
   }
-
-  streamFavorites() {
-    return this.store.pipe(
-      select('weather', 'favorites'),
-      map((favoriteCities: any[]) => {
-        const isfav = favoriteCities.filter(city => city.id === this.city.id);
-        return isfav.length > 0;
-      }),
-    )
-  }
-
   onCardClick(){
-
   }
 
 }

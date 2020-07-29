@@ -2,17 +2,15 @@
 <div class="wrapper" (click)="onCardClick()">
   <div class="top">
   <div class="left">
-
   </div>
-
     <div class="middle" *ngIf="city$ | async as city">
       <div class="city-current-weather">
         <span>{{ city.name}}</span>
-        <span>{{ city.temperature.current }} C</span>
+        <span>{{ city.temperature.celsius.current }} C</span>
       </div>
 
-      <img *ngIf="!(isFavorite$ | async)" src="./../../assets/img/unfavorite.svg" alt="" (click)="addRemoveFavorite('add')">
-      <img *ngIf="(isFavorite$ | async)"  src="./../../assets/img/favorite.svg" alt="" (click)="addRemoveFavorite('remove')">
+      <img *ngIf="!city.isFavorite" src="./../../assets/img/unfavorite.svg" alt="" (click)="addRemoveFavorite('add')">
+      <img *ngIf="city.isFavorite"  src="./../../assets/img/favorite.svg" alt="" (click)="addRemoveFavorite('remove')">
       <span><img class="current-weather-img" src="./../../assets/img/sunny.svg" alt=""></span>
     </div>
     <div class="right">
@@ -21,7 +19,7 @@
   </div>
 
   <div class="center">
-    <h2 class="weather-text">{{ (city$ | async).weatherText }}</h2>
+    <h2 class="weather-text">{{ (city$ | async).temperature.weatherText }}</h2>
   </div>
   <div class="bottom forecast-days-wrap">
     <div *ngFor="let day of forecastDays$ | async" class="day">

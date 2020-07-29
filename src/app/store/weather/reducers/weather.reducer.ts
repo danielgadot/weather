@@ -1,23 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as WeatherActions from '../actions/weather.actions';
-import { CityWeather } from '../../../models/city-weather.model';
+import { City } from '../../../models/city.model';
 
 export const weatherFeatureKey = 'weather';
-
 
 interface Weather {
   weather?: any;
 }
-
-interface City {
-  id: number;
-  name: string;
-  temperature: any;
-  date: string;
-  weatherText: any;
-}
-
-export interface State  extends Weather{
+export interface State  extends Weather {
     currentCity: City;
     favorites: number[];
     loading: boolean;
@@ -30,13 +20,22 @@ export const initialState: State = {
 
     currentCity: {
       id: 215854,
-      date: 'day.Date',
-      weatherText: 'Tel Aviv',
+      date: '01/01/20',
       name: 'Tel Aviv',
       temperature: {
-        min: 0,
-        max: 0
-      }
+        celsius: {
+          min: 22,
+          max: 30,
+          current: 27
+        },
+        fahrenheit: {
+          min: 22,
+          max: 30,
+          current: 27
+        },
+        weatherText: 'Tel Aviv',
+      },
+       isFavorite: true
     },
     favorites: [],
     loading: false,
@@ -55,20 +54,20 @@ const _weatherReducer = createReducer(
     return {
       ...state,
       favorites: addToFavReducer(state, payload),
+      currentCity: {
+        ...state.currentCity,
+        isFavorite: true,
+      }
     }
   }),
   on(WeatherActions.removeFromFav, (state, payload) => {
     return {
       ...state,
       favorites: removeFromFavReducer(state, payload),
-    }
-  }),
-  on(WeatherActions.fetchedCitySuccess, (state, payload) => {
-    return {
-      ...state,
-      currentCity: payload,
-      loading: false,
-      loaded: true
+      currentCity: {
+        ...state.currentCity,
+        isFavorite: false,
+      }
     }
   }),
   on(WeatherActions.getForecastDays, (state, payload) => {
@@ -101,31 +100,25 @@ const _weatherReducer = createReducer(
       ...state,
       favorites: payload.favorites,
     }
+  }),
+  on(WeatherActions.setCurrentCity, (state, payload) => {
+    return {
+      ...state,
+      currentCity: payload,
+    }
   })
 );
 
-
-
-
 function addToFavReducer(state, payload) {
-  let newFavs = Object.assign([], state.favorites);
-  newFavs.push(payload.city);
-  localStorage.setItem('favorites', JSON.stringify(newFavs));
-  return newFavs;
+  let newFavCities = Object.assign([], state.favorites);
+  newFavCities.push(payload.city);
+  localStorage.setItem('favorites', JSON.stringify(newFavCities));
+  return newFavCities;
 }
 
 function removeFromFavReducer(state, payload) {
-  let newFavs = Object.assign([], state.favorites);
-  newFavs = newFavs.filter(city => city.id !== payload.city.id);
-  localStorage.setItem('favorites', JSON.stringify(newFavs));
-  return newFavs;
-}
-
-function searchCityReducer(state, payload) {
-  if (payload.id) {
-    return payload.id
-  }
-  else {
-    return payload.searchWord;
-  }
+  let newFavCities = Object.assign([], state.favorites);
+  newFavCities = newFavCities.filter(city => city.id != payload.city.id);
+  localStorage.setItem('favorites', JSON.stringify(newFavCities));
+  return newFavCities;
 }

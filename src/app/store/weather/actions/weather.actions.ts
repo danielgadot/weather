@@ -3,13 +3,13 @@ import {createAction, props} from '@ngrx/store';
 export const addToFav = createAction('[city-weather Component] AddToFav', props<any>());
 export const removeFromFav = createAction('[city-weather Component] removeFromFav', props<any>());
 export const searchCity = createAction('[search Component] searchCity', props<any>());
-export const searchCityById = createAction('[city-weather Component] searchCityById', props<any>());
-export const fetchedCitySuccess = createAction('[city-weather Component] fetchedCitySuccess', props<any>());
+export const getCityWeatherById = createAction('[Effect Component] getCityWeatherById', props<any>());
 export const getForecastDays = createAction('[city-weather Component] getForecastDays', props<any>());
 export const setForecastDays = createAction('[weather Effect] setForecastDays', props<any>());
 export const setSearchResult = createAction('[weather Effect] setSearchResult', props<any>());
 export const removeCitiesFound = createAction('[search Component] removeCitiesFound', props<any>());
 export const setFavorites = createAction('[weather effect] setFavorites', props<any>());
+export const setCurrentCity = createAction('[weather effect] setCurrentCity', props<any>());
 // Actions to add
 
 // save favorites to localStorage

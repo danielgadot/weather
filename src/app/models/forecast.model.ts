@@ -1,4 +1,4 @@
-import { Temperature, DayTime} from './city-weather.model'
+import { Temperature, DayTime} from './city.model'
 
 export interface DailyForecasts {
     Date: string;

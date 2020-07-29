@@ -22,6 +22,8 @@ import { Routes, RouterModule } from "@angular/router";
 import {LocationStrategy, Location, PathLocationStrategy} from '@angular/common';
 import { FormsModule } from "@angular/forms";
 import { WeatherCardComponent } from './weather-card/weather-card.component';
+import { EntityDataModule } from '@ngrx/data';
+import { entityConfig } from './entity-metadata';
 
 
 const routes: Routes = [
@@ -51,6 +53,7 @@ const routes: Routes = [
     }),
     FormsModule,
     EffectsModule.forRoot([WeatherEffects]),
+    EntityDataModule.forRoot(entityConfig),
   ],
   providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
   bootstrap: [AppComponent]

@@ -35,13 +35,13 @@ export class SearchComponent implements OnInit {
   }
 
   onClickCity(city) {
-
+    console.log('%c city :: ', 'color: red;font-size:16px', city);
     this.searchVal = '';
     this.store.dispatch(
       WeatherActions.removeCitiesFound({})
     )
     this.store.dispatch(
-      WeatherActions.searchCityById({
+      WeatherActions.getCityWeatherById({
         id: city.Key,
         name: city.LocalizedName
       })
