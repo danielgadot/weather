@@ -31,21 +31,25 @@ export class CityWeatherComponent implements OnInit {
       }),
     );
 
-      this.forecastDays$ = this.store.pipe(
-        select('weather', 'forecastDays'),
-        map(res => res)
-      )
+      this.forecastDays$ = this.store.pipe(select('weather', 'forecastDays'));
   }
 
   addRemoveFavorite(operation) {
     if (operation === 'add') {
       this.store.dispatch(WeatherActions.addToFav({
-        // change later when tou have da city key
+        /*
+        * @Effect() logoutEffect$ = this.actions$
+          .ofType(LOGOUT)
+          .withLatestFrom(this.store$)
+          .map(([action: Action, storeState: AppState]) => {
+             return storeState.getUser;
+           })
+          .map(payload => ({type: 'LOGOUT_USER', payload}))
+        * */
         city: this.city,
       }))
     } else if ('remove') {
       this.store.dispatch(WeatherActions.removeFromFav({
-        // change later when tou have da city key
         city: this.city,
       }))
     }

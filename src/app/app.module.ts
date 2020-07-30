@@ -10,6 +10,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { WeatherEffects } from './store/weather.effects';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
+import {DefaultDataServiceConfig, ENTITY_METADATA_TOKEN} from '@ngrx/data';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -55,7 +56,18 @@ const routes: Routes = [
     EffectsModule.forRoot([WeatherEffects]),
     EntityDataModule.forRoot(entityConfig),
   ],
-  providers: [Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
+  providers: [
+    Location,
+    {
+      provide: LocationStrategy,
+      useClass: PathLocationStrategy,
+    },
+    // {provide: ENTITY_METADATA_TOKEN, multi: true, useValue: {
+    //   currentCity: {}
+    // } },
+    // {provide: DefaultDataServiceConfig, useValue: { root: 'http://dataservice.accuweather.com' } },
+
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

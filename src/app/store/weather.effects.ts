@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import {switchMap, map, tap, catchError, mergeMap} from 'rxjs/operators';
+import {switchMap, map, tap, catchError, mergeMap, exhaustMap} from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
 import { initialState }  from './weather/reducers/weather.reducer'
 import {
@@ -26,13 +26,13 @@ import {action} from "../models/action.model";
 export class WeatherEffects {
   constructor(private apiService: ApiService, private actions$: Actions, private store: Store<State>) {}
 
-    ngrxOnInitEffects(): Action {
-      const favorites = JSON.parse(localStorage.getItem('favorites'));
-      this.store.dispatch(setFavorites({ favorites }))
-      this.store.dispatch(WeatherActions.getCityWeatherById(initialState.currentCity));
-      this.store.dispatch(WeatherActions.getForecastDays({ id: initialState.currentCity.id }))
-      return { type: '[UserEffects]: Init' };
-    }
+  ngrxOnInitEffects(): Action {
+    const favorites = JSON.parse(localStorage.getItem('favorites'));
+    this.store.dispatch(setFavorites({ favorites }))
+    this.store.dispatch(WeatherActions.getCityWeatherById(initialState.currentCity));
+    this.store.dispatch(WeatherActions.getForecastDays({ id: initialState.currentCity.id }))
+    return { type: '[WeatherEffects]: Init' };
+  }
 
   getCurrentWeather$ = createEffect(
     (): any => this.actions$.pipe(
@@ -40,18 +40,18 @@ export class WeatherEffects {
         switchMap((action: Action) => {
           return this.searchLocationStream(action)
         })
-    ));
+  ));
 
   getCurrentWeatherbyId$ = createEffect(
     (): any => this.actions$.pipe(
       ofType(getCityWeatherById),
-      map((payload) => {
-        console.log('%c payload getCityWeatherById:: ', 'color: red;font-size:16px', payload);
-        this.getCurrentWeather(payload);
-      }),
-      map(newCity => {
-        // this.store.dispatch(setCurrentCity(newCity))
-        return {type: 'current city have benn set'}
+      switchMap((payload) => {
+        return this.apiService.getCurrentWeather(payload.id).pipe(
+          map(cities => cities[0]),
+          tap(cities => console.log('%c payload :: ', 'color: red;font-size:16px', cities)),
+          map(cities => ({ type: '[weather Effect] getCityWeatherByIdSuccess', payload: cities})),
+          catchError(error => of({ type: '[weather Effect] getCityWeatherByIdError', payload: error})),
+        )
       })
     ));
 
@@ -65,13 +65,14 @@ export class WeatherEffects {
       )
     }
 
-    private getCurrentWeather(payload) {
-      return this.apiService.getCurrentWeather(payload.id).pipe(
-        map(cities => cities[0]),
-        tap(cities => console.log('%c payload :: ', 'color: red;font-size:16px', cities)),
-        catchError(error => of(console.log(' err :: ', error))),
-      ).subscribe()
-    }
+    // private getCurrentWeather(payload) {
+    //   return this.apiService.getCurrentWeather(payload.id).pipe(
+    //     map(cities => cities[0]),
+    //     tap(cities => console.log('%c payload :: ', 'color: red;font-size:16px', cities)),
+    //     tap(cities => this.store.dispatch({ type: 'getCityWeatherByIdSuccess'})),
+    //     catchError(error => of(console.log(' err :: ', error))),
+    //   ).subscribe()
+    // }
 
     getForecast$ = createEffect(
       () => this.actions$.pipe(
