@@ -1,5 +1,4 @@
-<!-- your navs bound to current route fragments -->
-<ul class="nav-tabs nav-ul">
+<ul class="nav-tabs nav-ul-desktop">
   <li class="degrees-btn">
     <span class="txt-nav-btn">Celsius</span>
     <input type="checkbox" hidden="hidden" id="degrees-btn" [value]="isDegreesCelsius$ | async" (click)="changeDegrees()">
@@ -16,7 +15,21 @@
     <a [routerLink]="link.fragment">{{ link.title }}</a>
   </li>
 </ul>
-<pre>
-  theme :: {{ isThemeLight$ | async }}
-  isDegreesCelsius$ :: {{ isDegreesCelsius$ | async }}
-</pre>
+
+<ul class="nav-tabs nav-ul-mobile">
+  <li class="degrees-btn">
+    <span class="txt-nav-btn">C</span>
+    <input type="checkbox" hidden="hidden" id="degrees-btn" [value]="isDegreesCelsius$ | async" (click)="changeDegrees()">
+    <label class="switch" for="degrees-btn"></label>
+    <span class="txt-nav-btn">F</span>
+  </li>
+  <li class="theme-btn">
+    <span class="txt-nav-btn"><img src="./assets/img/dark.svg"></span>
+    <input type="checkbox" hidden="hidden" id="theme-btn" [value]="(isThemeLight$ | async)" (click)="changeTheme()">
+    <label class="switch" for="theme-btn"></label>
+    <span class="txt-nav-btn"><img src="./assets/img/sunny.svg"></span>
+  </li>
+  <li *ngFor="let link of links" class="nav-link">
+    <a [routerLink]="link.fragment"><img src="{{link.src}}"></a>
+  </li>
+</ul>

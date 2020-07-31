@@ -11,8 +11,8 @@ import {State} from "../store/weather/reducers/weather.reducer";
 export class NavbarComponent implements OnInit {
 
   links = [
-    { title: 'Home', fragment: '/' },
-    { title: 'Favorites', fragment: 'favorites' }
+    { title: 'Home', fragment: '/', src: './assets/img/home.svg' },
+    { title: 'Favorites', fragment: 'favorites', src: './assets/img/favs-page.svg' }
   ];
 
   isDegreesCelsius$ = this.store.pipe(select('weather', 'isDegreesCelsius'));
