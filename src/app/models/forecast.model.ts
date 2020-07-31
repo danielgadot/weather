@@ -1,11 +1,11 @@
-import { Temperature, DayTime} from './city.model'
+import { Temperature } from './temperature';
 
 export interface DailyForecasts {
     Date: string;
     EpochDate: number;
     Temperature: Temperature;
-    Day: DayTime;
-    Night: DayTime;
+    Day: any;
+    Night: any;
     Sources: string[];
     MobileLink: string,
     Link: string
