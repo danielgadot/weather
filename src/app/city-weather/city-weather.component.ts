@@ -19,6 +19,10 @@ export class CityWeatherComponent implements OnInit {
   city$: Observable<any>;
   forecastDays$: Observable<any>;
   city;
+
+  isDegreesCelsius$ = this.store.pipe(select('weather', 'isDegreesCelsius'));
+  isThemeLight$ = this.store.pipe(select('weather', 'isThemeLight'));
+
   ngOnInit(): void {
 
     this.city$ = this.store.pipe(

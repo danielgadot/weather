@@ -1,9 +1,22 @@
 <!-- your navs bound to current route fragments -->
-<ul ngbNav [activeId]="route.fragment | async" class="nav-tabs nav-ul">
-  <li [ngbNavItem]="link.fragment" *ngFor="let link of links">
-    <a ngbNavLink [routerLink]="link.fragment">{{ link.title }}</a>
+<ul class="nav-tabs nav-ul">
+  <li class="degrees-btn">
+    <span class="txt-nav-btn">Celsius</span>
+    <input type="checkbox" hidden="hidden" id="degrees-btn" [value]="isDegreesCelsius$ | async" (click)="changeDegrees()">
+    <label class="switch" for="degrees-btn"></label>
+    <span class="txt-nav-btn">Fahrenheit</span>
   </li>
-  <li class="neumorphism-toggle">
-    <input type="checkbox" id="neumorphism" checked>
+  <li class="theme-btn">
+    <span class="txt-nav-btn">Dark</span>
+    <input type="checkbox" hidden="hidden" id="theme-btn" [value]="(isThemeLight$ | async)" (click)="changeTheme()">
+    <label class="switch" for="theme-btn"></label>
+    <span class="txt-nav-btn">Light</span>
+  </li>
+  <li *ngFor="let link of links" class="nav-link">
+    <a [routerLink]="link.fragment">{{ link.title }}</a>
   </li>
 </ul>
+<pre>
+  theme :: {{ isThemeLight$ | async }}
+  isDegreesCelsius$ :: {{ isDegreesCelsius$ | async }}
+</pre>

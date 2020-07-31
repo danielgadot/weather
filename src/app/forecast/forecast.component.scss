@@ -1,9 +1,12 @@
-.card {
-  padding: 10px;
-  text-align: center;
-  border-radius: 8px;
-  font-size: 20px;
-  width: 100px;
+.forecast-days-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.card-wrap {
+  margin-right: 2%;
+
 }
 
 @media screen and (max-width: 990px) {
@@ -13,8 +16,9 @@
     justify-content: space-around;
     align-items: center;
   }
-  .card {
+  .card-wrap {
+    margin: 2px;
     width: 100%;
-  }
 
+  }
 }

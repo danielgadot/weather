@@ -14,6 +14,9 @@ export const setCurrentCity = createAction('[weather effect] setCurrentCity', pr
 export const searchCity = createAction('[search Component] searchCity', props<any>());
 export const removeCitiesFound = createAction('[search Component] removeCitiesFound', props<any>());
 
+export const changeTheme = createAction('[Navbar] change Theme', props<any>());
+export const changeDegrees = createAction('[Navbar] change Degrees', props<any>());
+
 // Actions to add
 
 // save favorites to localStorage

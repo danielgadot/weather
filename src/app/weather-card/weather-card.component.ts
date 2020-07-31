@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {select, Store} from "@ngrx/store";
+import {State} from "../store/weather/reducers/weather.reducer";
 
 @Component({
   selector: 'weather-card',
@@ -7,7 +9,10 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class WeatherCardComponent implements OnInit {
 
-  constructor() { }
+  isDegreesCelsius$ = this.store.pipe(select('weather', 'isDegreesCelsius'));
+  isThemeLight$ = this.store.pipe(select('weather', 'isThemeLight'));
+
+  constructor(private store: Store<State>) { }
 
   @Input() weatherData;
 

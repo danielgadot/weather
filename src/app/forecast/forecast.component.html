@@ -1,0 +1,5 @@
+<div class="forecast-days-wrap">
+  <div *ngFor="let day of forecastDays$ | async" class="card-wrap">
+    <weather-card [weatherData]="day"></weather-card>
+  </div>
+</div>

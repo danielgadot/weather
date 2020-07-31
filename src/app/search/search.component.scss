@@ -1,12 +1,20 @@
 .search {
   padding: 10px;
+  border-right: 0;
+  border-radius: 6px 0 0 6px;
+  &:focus {
+    outline: none;
+  }
 }
 .icon-search {
-  border: 1px solid white;
+  border: 2px solid black;
+  border-left: 0;
+  border-radius: 0 6px 6px 0;
   padding: 10px;
-  position: relative;
-  top: -2px;
   background-color: white;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .cities-found-ul {
@@ -25,4 +33,14 @@
     cursor: pointer;
     background-color: grey;
   }
+}
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+.search-result-wrapper {
+  position: absolute;
+  top: 130px;
+  width: 233px;
 }

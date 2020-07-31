@@ -1,9 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+//@import '~bootstrap/scss/bootstrap';
 body {
-  height: 95vh;
+  //height: 95vh;
   margin: 0 20px 0 20px;
+  //background-color: black;
+}
+
+.light {
+  background-color: white;
+  color: black;
+}
+
+.dark {
   background-color: black;
+  color: white;
 }

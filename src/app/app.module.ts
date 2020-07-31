@@ -18,11 +18,12 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { SearchComponent } from './search/search.component';
 import { CityWeatherComponent } from './city-weather/city-weather.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Routes, RouterModule } from "@angular/router";
 import {LocationStrategy, Location, PathLocationStrategy} from '@angular/common';
 import { FormsModule } from "@angular/forms";
 import { WeatherCardComponent } from './weather-card/weather-card.component';
+import { ForecastComponent } from './forecast/forecast.component';
 import { EntityDataModule } from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 
@@ -39,12 +40,13 @@ const routes: Routes = [
     SearchComponent,
     CityWeatherComponent,
     NavbarComponent,
-    WeatherCardComponent
+    WeatherCardComponent,
+    ForecastComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    NgbModule,
+    // NgbModule,
     RouterModule.forRoot(routes),
     StoreModule.forRoot({}),
     StoreModule.forFeature(weatherFeatureKey, weatherReducer),

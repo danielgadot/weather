@@ -14,6 +14,8 @@ export interface State  extends Weather {
     loaded: boolean;
     forecastDays: any[];
     citiesFound: any[];
+    isDegreesCelsius: boolean;
+    isThemeLight: boolean;
 }
 
 export const initialState: State = {
@@ -31,7 +33,7 @@ export const initialState: State = {
         fahrenheit: {
           min: 22,
           max: 30,
-          current: 27
+          current: 0
         },
         weatherText: 'Tel Aviv',
       },
@@ -42,6 +44,8 @@ export const initialState: State = {
     loaded: false,
     forecastDays: [],
     citiesFound: [],
+    isDegreesCelsius: true,
+    isThemeLight: true,
 };
 
 export function weatherReducer(state: State | undefined, action: Action) {
@@ -105,6 +109,18 @@ const _weatherReducer = createReducer(
     return {
       ...state,
       currentCity: payload,
+    }
+  }),
+  on(WeatherActions.changeDegrees, (state, payload) => {
+    return {
+      ...state,
+      isDegreesCelsius: !state.isDegreesCelsius,
+    }
+  }),
+  on(WeatherActions.changeTheme, (state, payload) => {
+    return {
+      ...state,
+      isThemeLight: !state.isThemeLight,
     }
   })
 );

@@ -1,12 +1,13 @@
-<div class="card" style="width: 9rem;">
+<div class="card"  [ngClass]="(isThemeLight$ | async) ? 'dark' : 'light'">
   <div class="card-body">
     <h5 class="card-title">{{ weatherData.date | date: 'E' }}</h5>
     <h5 class="card-title">{{ weatherData.name }}</h5>
 
     <p class="card-text">
-      <img src="./../../assets/img/rain.svg" alt="">
       <span *ngIf="weatherData.temperature.min !== 0">
-        {{fahrenheitToCelsius(weatherData.temperature.min)}} - {{fahrenheitToCelsius(weatherData.temperature.max)}}
+        <span *ngIf="!(isDegreesCelsius$ | async)">{{weatherData.temperature.min}}C - {{weatherData.temperature.max}}C</span>
+        <span *ngIf="isDegreesCelsius$ | async">{{fahrenheitToCelsius(weatherData.temperature.min)}}F - {{fahrenheitToCelsius(weatherData.temperature.max)}}F</span>
+
       </span>
       <span *ngIf="weatherData.temperature.min === 0">
         {{ weatherData.temperature.current }}
@@ -14,3 +15,6 @@
     </p>
   </div>
 </div>
+
+<!--*ngIf="!(isDegreesCelsius$ | async)"-->
+<!--*ngIf="isDegreesCelsius$ | async"-->
