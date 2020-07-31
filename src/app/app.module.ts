@@ -6,7 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { weatherReducer, weatherFeatureKey } from './store/weather/reducers/weather.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { WeatherEffects } from './store/weather.effects';
+import { WeatherEffects } from './store/weather/weather.effects';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';

@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import {switchMap, map, tap, catchError, mergeMap, exhaustMap} from 'rxjs/operators';
-import { ApiService } from '../services/api.service';
-import { initialState }  from './weather/reducers/weather.reducer'
+import { ApiService } from '../../services/api.service';
+import { initialState }  from './reducers/weather.reducer';
+import { EMPTY } from 'rxjs'
 import {
   searchCity,
   addToFav,
@@ -14,13 +15,13 @@ import {
   setSearchResult,
   setFavorites,
   setCurrentCity
-} from './weather/actions/weather.actions';
+} from './actions/weather.actions';
 import { of, Observable } from "rxjs";
-import { City } from '../models/city.model';
-import { State } from './weather/reducers/weather.reducer';
+import { City } from '../../models/city.model';
+import { State } from './reducers/weather.reducer';
 import { Store, select } from "@ngrx/store";
-import * as WeatherActions from "./weather/actions/weather.actions";
-import {action} from "../models/action.model";
+import * as WeatherActions from "./actions/weather.actions";
+import {action} from "../../models/action.model";
 
 @Injectable()
 export class WeatherEffects {
@@ -37,8 +38,18 @@ export class WeatherEffects {
   getCurrentWeather$ = createEffect(
     (): any => this.actions$.pipe(
         ofType(searchCity),
-        switchMap((action: Action) => {
-          return this.searchLocationStream(action)
+      tap(payload => console.log('%c payload in getCurrentWeather$:: ', 'color: red;font-size:16px', payload)),
+      switchMap((payload: { searchWord: string, type: string } ) => {
+          return this.apiService.searchLocation(payload.searchWord).pipe(
+            map((citiesFound) => {
+              this.store.dispatch(setSearchResult({ cities: citiesFound }))
+              return {type: 'dispatched cities found'}
+            }),
+            catchError((err) => {
+              console.log('%c err :: ', 'color: red;font-size:16px', err);
+              return of({ type: '[WeatherEffects] searchCity Network Error' })
+            })
+          )
         })
   ));
 
@@ -54,25 +65,6 @@ export class WeatherEffects {
         )
       })
     ));
-
-
-    private searchLocationStream(action) {
-      return this.apiService.searchLocation(action.searchWord).pipe(
-        map((citiesFound) => {
-          this.store.dispatch(setSearchResult({ cities: citiesFound }))
-          return {type: 'dispatched cities found'}
-        })
-      )
-    }
-
-    // private getCurrentWeather(payload) {
-    //   return this.apiService.getCurrentWeather(payload.id).pipe(
-    //     map(cities => cities[0]),
-    //     tap(cities => console.log('%c payload :: ', 'color: red;font-size:16px', cities)),
-    //     tap(cities => this.store.dispatch({ type: 'getCityWeatherByIdSuccess'})),
-    //     catchError(error => of(console.log(' err :: ', error))),
-    //   ).subscribe()
-    // }
 
     getForecast$ = createEffect(
       () => this.actions$.pipe(
