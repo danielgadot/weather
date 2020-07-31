@@ -66,9 +66,10 @@ input:checked + .switch:active::before {
 .txt-nav-btn {
   color: white;
 }
-.degrees-btn, .theme-btn {
+.degrees-btn, .theme-btn,  .degrees-btn-desk, .theme-btn-desk{
   margin-right: 30px;
 }
+
 @media screen and (max-width: 500px) {
   .nav-ul-desktop {
     display: none;

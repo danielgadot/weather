@@ -12,6 +12,9 @@
       <span *ngIf="weatherData.temperature.min === 0">
         {{ weatherData.temperature.current }}
       </span>
+      <span class="weather-text" *ngIf="weatherData.showWeatherText">
+        {{ weatherData.weatherText }}
+      </span>
     </p>
   </div>
 </div>

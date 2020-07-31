@@ -1,14 +1,14 @@
 <ul class="nav-tabs nav-ul-desktop">
   <li class="degrees-btn">
     <span class="txt-nav-btn">Celsius</span>
-    <input type="checkbox" hidden="hidden" id="degrees-btn" [value]="isDegreesCelsius$ | async" (click)="changeDegrees()">
-    <label class="switch" for="degrees-btn"></label>
+    <input type="checkbox" hidden="hidden" id="degrees-btn-desk" [value]="isDegreesCelsius$ | async" (click)="changeDegrees()">
+    <label class="switch" for="degrees-btn-desk"></label>
     <span class="txt-nav-btn">Fahrenheit</span>
   </li>
   <li class="theme-btn">
     <span class="txt-nav-btn">Dark</span>
-    <input type="checkbox" hidden="hidden" id="theme-btn" [value]="(isThemeLight$ | async)" (click)="changeTheme()">
-    <label class="switch" for="theme-btn"></label>
+    <input type="checkbox" hidden="hidden" id="theme-btn-desk" [value]="(isThemeLight$ | async)" (click)="changeTheme()">
+    <label class="switch" for="theme-btn-desk"></label>
     <span class="txt-nav-btn">Light</span>
   </li>
   <li *ngFor="let link of links" class="nav-link">

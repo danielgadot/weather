@@ -1,16 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { environment } from '../environments/environment'; // Angular CLI environment
-
+import { HttpClientModule } from '@angular/common/http';
+import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './store/weather/reducers';
 import { weatherReducer, weatherFeatureKey } from './store/weather/reducers/weather.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { WeatherEffects } from './store/weather.effects';
-import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
-import {DefaultDataServiceConfig, ENTITY_METADATA_TOKEN} from '@ngrx/data';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -18,14 +14,11 @@ import { FavoritesComponent } from './favorites/favorites.component';
 import { SearchComponent } from './search/search.component';
 import { CityWeatherComponent } from './city-weather/city-weather.component';
 import { NavbarComponent } from './navbar/navbar.component';
-// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Routes, RouterModule } from "@angular/router";
 import {LocationStrategy, Location, PathLocationStrategy} from '@angular/common';
 import { FormsModule } from "@angular/forms";
 import { WeatherCardComponent } from './weather-card/weather-card.component';
 import { ForecastComponent } from './forecast/forecast.component';
-import { EntityDataModule } from '@ngrx/data';
-import { entityConfig } from './entity-metadata';
 
 
 const routes: Routes = [
@@ -46,7 +39,6 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    // NgbModule,
     RouterModule.forRoot(routes),
     StoreModule.forRoot({}),
     StoreModule.forFeature(weatherFeatureKey, weatherReducer),
@@ -56,20 +48,14 @@ const routes: Routes = [
     }),
     FormsModule,
     EffectsModule.forRoot([WeatherEffects]),
-    EntityDataModule.forRoot(entityConfig),
   ],
   providers: [
     Location,
     {
       provide: LocationStrategy,
       useClass: PathLocationStrategy,
-    },
-    // {provide: ENTITY_METADATA_TOKEN, multi: true, useValue: {
-    //   currentCity: {}
-    // } },
-    // {provide: DefaultDataServiceConfig, useValue: { root: 'http://dataservice.accuweather.com' } },
-
-    ],
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

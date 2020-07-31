@@ -10,7 +10,8 @@
         <span *ngIf="isDegreesCelsius$ | async">{{ city.temperature.celsius.current }} C</span>
         <span *ngIf="!(isDegreesCelsius$ | async)">{{ city.temperature.fahrenheit.current }} F</span>
       </div>
-      <span><img class="current-weather-img" src="./../../assets/img/sunny.svg" alt=""></span>
+      <span *ngIf="city.temperature.celsius.current > 10"><img class="current-weather-img" src="./../../assets/img/sunny.svg" alt=""></span>
+      <span *ngIf="city.temperature.celsius.current < 10"><img class="current-weather-img" src="./../../assets/img/rain.svg" alt=""></span>
     </div>
 
   </div>
@@ -18,6 +19,4 @@
   <div class="bottom">
     <h2 class="weather-text">{{ (city$ | async).temperature.weatherText }}</h2>
   </div>
-
-
 </div>

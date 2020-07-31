@@ -1,6 +1,6 @@
 <div class="wrapper">
 
-  <div *ngFor="let fav of favorites$ | async" >
+  <div *ngFor="let fav of favorites$ | async" (click)="navigateToHome(fav)" class="card-wrap">
     <weather-card [weatherData]="fav"></weather-card>
   </div>
 </div>
