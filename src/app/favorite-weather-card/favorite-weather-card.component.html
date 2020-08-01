@@ -1,0 +1,10 @@
+<div class="card"  [ngClass]="(isThemeLight$ | async) ? 'dark' : 'light'" (click)="navigateToHome(fav)">
+  <div class="card-body">
+    <h5 class="card-title">{{ weatherData.name }}</h5>
+    <p class="card-text">
+        <span *ngIf="isDegreesCelsius$ | async">{{weatherData.temperature.celsius.current}}C</span>
+        <span *ngIf="!(isDegreesCelsius$ | async)">{{weatherData.temperature.fahrenheit.current}}F</span>
+        <span class="weather-text">{{ weatherData.temperature.weatherText }}</span>
+    </p>
+  </div>
+</div>

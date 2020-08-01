@@ -113,9 +113,10 @@ const _weatherReducer = createReducer(
     }
   }),
   on(WeatherActions.setFavorites, (state, payload) => {
+    const favs = payload.favorites ? payload.favorites : state.favorites
     return {
       ...state,
-      favorites: payload.favorites,
+      favorites: favs,
       currentCity: {
         ...state.currentCity,
         isFavorite: isCityFavorite(state, payload),

@@ -20,6 +20,7 @@ import { FormsModule } from "@angular/forms";
 import { WeatherCardComponent } from './weather-card/weather-card.component';
 import { ForecastComponent } from './forecast/forecast.component';
 import { ModalComponent } from './modal/modal.component';
+import { FavoriteWeatherCardComponent } from './favorite-weather-card/favorite-weather-card.component';
 
 
 const routes: Routes = [
@@ -36,7 +37,8 @@ const routes: Routes = [
     NavbarComponent,
     WeatherCardComponent,
     ForecastComponent,
-    ModalComponent
+    ModalComponent,
+    FavoriteWeatherCardComponent
   ],
   imports: [
     BrowserModule,

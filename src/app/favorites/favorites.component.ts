@@ -3,8 +3,6 @@ import {select, Store} from "@ngrx/store";
 import {map} from "rxjs/operators";
 import {Observable, of} from "rxjs";
 import { State } from '../store/weather/reducers/weather.reducer';
-import * as WeatherActions from '../store/weather/actions/weather.actions';
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'favorites',
@@ -25,14 +23,8 @@ export class FavoritesComponent implements OnInit {
       }));
     })
     )
-  constructor(private store: Store<State>, private router: Router) { }
+  constructor(private store: Store<State>) { }
 
   ngOnInit(): void {}
-
-  navigateToHome(city) {
-    console.log('%c clicked navigate :: ', 'color: red;font-size:16px', city);
-    this.store.dispatch(WeatherActions.getCityWeatherById({ id: city.id, name: city.name }));
-    this.router.navigateByUrl('/')
-  }
 
 }

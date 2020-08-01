@@ -5,6 +5,7 @@ import * as WeatherActions from "../store/weather/actions/weather.actions";
 import { Observable } from 'rxjs';
 import { State } from '../store/weather/reducers/weather.reducer';
 import { tap } from "rxjs/operators";
+import {setFavorites} from "../store/weather/actions/weather.actions";
 
 @Component({
   selector: 'search',
@@ -42,7 +43,7 @@ export class SearchComponent implements OnInit {
       })
     )
     this.store.dispatch(WeatherActions.getForecastDays({ id: city.Key }))
-
+    this.store.dispatch(setFavorites({}))
   }
 
   @HostListener('document:click', ['$event'])
