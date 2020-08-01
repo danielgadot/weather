@@ -42,7 +42,7 @@ export class WeatherEffects {
               return {type: 'dispatched cities found'}
             }),
             catchError((err) => {
-              this.store.dispatch(WeatherActions.toggleModal({ err: err }))
+              this.store.dispatch(WeatherActions.toggleModalOn({ err: err }))
               return of({ type: '[WeatherEffects] searchCity Network Error' })
             })
           )
@@ -61,7 +61,7 @@ export class WeatherEffects {
             return { type: '[weather Effect] getWeatherById DONE'}
           }),
           catchError(error => {
-            this.store.dispatch(WeatherActions.toggleModal({err: error}))
+            this.store.dispatch(WeatherActions.toggleModalOn({err: error}))
             return of({ type: '[weather Effect] getCityWeatherByIdError', payload: error})
           }),
         )
@@ -93,6 +93,10 @@ export class WeatherEffects {
           tap((forecastDays) => {
             this.store.dispatch(setForecastDays({ forecastDays }));
           }),
+            catchError(error => {
+              this.store.dispatch(WeatherActions.toggleModalOn({err: error}))
+              return of({ type: '[weather Effect] getForecastDays Error', payload: error})
+            }),
         ).subscribe() }),
       )
     , { dispatch: false })

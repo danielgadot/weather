@@ -135,10 +135,17 @@ const _weatherReducer = createReducer(
       isThemeLight: !state.isThemeLight,
     }
   }),
-  on(WeatherActions.toggleModal, (state, payload) => {
+  on(WeatherActions.toggleModalOn, (state, payload) => {
     return {
       ...state,
-      isErrModalOpen: !state.isErrModalOpen,
+      isErrModalOpen: true,
+      errMsg: payload.err
+    }
+  }),
+  on(WeatherActions.toggleModalOff, (state, payload) => {
+    return {
+      ...state,
+      isErrModalOpen: false,
       errMsg: payload.err
     }
   }),

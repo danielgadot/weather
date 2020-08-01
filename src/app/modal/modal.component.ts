@@ -20,11 +20,11 @@ export class ModalComponent implements OnInit {
   }
 
   openModal() {
-    this.store.dispatch(WeatherActions.toggleModal({}))
+    this.store.dispatch(WeatherActions.toggleModalOn({}))
   }
 
   closeModal() {
-    this.store.dispatch(WeatherActions.toggleModal({}))
+    this.store.dispatch(WeatherActions.toggleModalOff({}))
   }
 
 }

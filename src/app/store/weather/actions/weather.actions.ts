@@ -14,7 +14,8 @@ export const setCityName = createAction('[weather Effect] setCityName', props<an
 export const setForecastDays = createAction('[weather Effect] setForecastDays', props<any>());
 export const setSearchResult = createAction('[weather Effect] setSearchResult', props<any>());
 export const setFavorites = createAction('[weather Effect] setFavorites', props<any>());
-export const toggleModal = createAction('[weather Effect] toggleModal', props<any>());
+export const toggleModalOn = createAction('[weather Effect] toggleModalOn', props<any>());
+export const toggleModalOff = createAction('[weather Effect] toggleModalOff', props<any>());
 // export const setCurrentCity = createAction('[weather effect] setCurrentCity', props<any>());
 
 // Search Component
