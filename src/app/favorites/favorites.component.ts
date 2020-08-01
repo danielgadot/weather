@@ -20,7 +20,8 @@ export class FavoritesComponent implements OnInit {
         name: favCity.name,
         temperature: favCity.temperature,
         weatherText: favCity.weatherText,
-        showWeatherText: true
+        showWeatherText: true,
+        id: favCity.id
 
       }));
     })
@@ -31,7 +32,7 @@ export class FavoritesComponent implements OnInit {
 
   navigateToHome(city) {
     console.log('%c clicked navigate :: ', 'color: red;font-size:16px', city);
-    this.store.dispatch(WeatherActions.setCurrentCity(city));
+    this.store.dispatch(WeatherActions.getCityWeatherById(city.id));
     this.router.navigateByUrl('/')
   }
 

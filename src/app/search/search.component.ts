@@ -4,6 +4,7 @@ import { Store, select } from "@ngrx/store";
 import * as WeatherActions from "../store/weather/actions/weather.actions";
 import { Observable } from 'rxjs';
 import { State } from '../store/weather/reducers/weather.reducer';
+import { tap } from "rxjs/operators";
 
 @Component({
   selector: 'search',
@@ -13,11 +14,15 @@ import { State } from '../store/weather/reducers/weather.reducer';
 export class SearchComponent implements OnInit {
   searchVal = '';
   citiesFound$: Observable<any>;
+  isDropdownOpen = false;
 
   constructor(private apiService: ApiService, private store: Store<State>, private eRef: ElementRef) { }
 
   ngOnInit(): void {
-    this.citiesFound$ = this.store.pipe(select('weather', 'citiesFound'))
+    this.citiesFound$ = this.store.pipe(
+      select('weather', 'citiesFound'),
+      tap(cities => this.isDropdownOpen = cities.length > 0)
+    )
   }
 
   searchCity() {
@@ -30,20 +35,19 @@ export class SearchComponent implements OnInit {
 
   onClickCity(city) {
     this.searchVal = '';
-    this.store.dispatch(
-      WeatherActions.removeCitiesFound({})
-    )
-    this.store.dispatch(
-      WeatherActions.getCityWeatherById({
+    this.store.dispatch(WeatherActions.removeCitiesFound({}))
+    this.store.dispatch(WeatherActions.getCityWeatherById({
         id: city.Key,
         name: city.LocalizedName
       })
     )
+    this.store.dispatch(WeatherActions.getForecastDays({ id: city.Key }))
+
   }
 
   @HostListener('document:click', ['$event'])
   toggleOffSearchResultMenu(event){
-      if (!this.eRef.nativeElement.contains(event.target)) {
+      if (this.isDropdownOpen && !event.target.classList.contains('search-result-wrapper')) {
         this.store.dispatch(
           WeatherActions.removeCitiesFound({})
         )

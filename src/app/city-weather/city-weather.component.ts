@@ -5,7 +5,7 @@ import { Observable, Subject } from "rxjs";
 import { Store, select } from "@ngrx/store";
 import { tap, map, switchMap } from 'rxjs/operators';
 import * as WeatherActions from '../store/weather/actions/weather.actions';
-import { State } from '../store/weather/reducers/weather.reducer';
+import {initialState, State} from '../store/weather/reducers/weather.reducer';
 
 @Component({
   selector: 'city-weather',
@@ -17,14 +17,13 @@ export class CityWeatherComponent implements OnInit {
   constructor(private apiService: ApiService, private store: Store<State>) { }
 
   city$: Observable<any>;
-  forecastDays$: Observable<any>;
+  // forecastDays$: Observable<any> = this.store.pipe(select('weather', 'forecastDays'));
   city;
 
   isDegreesCelsius$ = this.store.pipe(select('weather', 'isDegreesCelsius'));
   isThemeLight$ = this.store.pipe(select('weather', 'isThemeLight'));
 
   ngOnInit(): void {
-
     this.city$ = this.store.pipe(
       select('weather', 'currentCity'),
       map((currentCity: City) => {
@@ -34,8 +33,6 @@ export class CityWeatherComponent implements OnInit {
           return currentCity;
       }),
     );
-
-      this.forecastDays$ = this.store.pipe(select('weather', 'forecastDays'));
   }
 
   addRemoveFavorite(operation) {

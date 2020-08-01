@@ -24,10 +24,10 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {}
   changeDegrees() {
-    this.store.dispatch({type: '[Navbar] change Degrees'})
+    this.store.dispatch({type: '[Navbar Component] change Degrees'})
 
   }
   changeTheme() {
-    this.store.dispatch({type: '[Navbar] change Theme'})
+    this.store.dispatch({type: '[Navbar Component] change Theme'})
   }
 }

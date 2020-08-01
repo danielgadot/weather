@@ -39,7 +39,7 @@ export const initialState: State = {
         },
         weatherText: 'Tel Aviv',
       },
-       isFavorite: true
+       isFavorite: false
     },
     favorites: [],
     loading: false,
@@ -97,6 +97,15 @@ const _weatherReducer = createReducer(
       citiesFound: payload.cities,
     }
   }),
+  on(WeatherActions.setCityName, (state, payload) => {
+    return {
+      ...state,
+      currentCity: {
+        ...state.currentCity,
+      name: payload.name,
+      }
+    }
+  }),
   on(WeatherActions.removeCitiesFound, (state, payload) => {
     return {
       ...state,
@@ -107,12 +116,6 @@ const _weatherReducer = createReducer(
     return {
       ...state,
       favorites: payload.favorites,
-    }
-  }),
-  on(WeatherActions.setCurrentCity, (state, payload) => {
-    return {
-      ...state,
-      currentCity: payload,
     }
   }),
   on(WeatherActions.changeDegrees, (state, payload) => {
@@ -132,6 +135,27 @@ const _weatherReducer = createReducer(
       ...state,
       isErrModalOpen: !state.isErrModalOpen,
       errMsg: payload.err
+    }
+  }),
+  on(WeatherActions.getCityWeatherByIdSuccess, (state, payload) => {
+    return {
+      ...state,
+      currentCity: {
+        ...state.currentCity,
+        temperature: {
+          celsius: {
+            min: 22,
+            max: 30,
+            current: payload.city.Temperature.Metric.Value
+          },
+          fahrenheit: {
+            min: 22,
+            max: 30,
+            current: payload.city.Temperature.Imperial.Value
+          },
+          weatherText: payload.city.WeatherText,
+        }
+      }
     }
   })
 );
