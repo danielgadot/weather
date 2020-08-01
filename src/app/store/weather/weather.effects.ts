@@ -53,7 +53,6 @@ export class WeatherEffects {
     (): any => this.actions$.pipe(
       ofType(getCityWeatherById),
       switchMap((payload) => {
-        console.log('%c payload :: ', 'color: red;font-size:16px', payload);
         this.store.dispatch(WeatherActions.setCityName(payload))
         return this.apiService.getCurrentWeather(payload.id).pipe(
           map(cities => cities[0]),

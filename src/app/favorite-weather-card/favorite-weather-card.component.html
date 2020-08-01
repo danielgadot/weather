@@ -1,4 +1,4 @@
-<div class="card"  [ngClass]="(isThemeLight$ | async) ? 'dark' : 'light'" (click)="navigateToHome(fav)">
+<div class="card"  [ngClass]="(isThemeLight$ | async) ? 'dark' : 'light'" (click)="navigateToHome()">
   <div class="card-body">
     <h5 class="card-title">{{ weatherData.name }}</h5>
     <p class="card-text">

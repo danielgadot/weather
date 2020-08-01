@@ -20,8 +20,7 @@ export class FavoriteWeatherCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  navigateToHome(city) {
-    console.log('%c weatherData :: ', 'color: red;font-size:16px', this.weatherData);
+  navigateToHome() {
     this.store.dispatch(WeatherActions.getCityWeatherById({ id: this.weatherData.id, name: this.weatherData.name }));
     this.router.navigateByUrl('/')
   }
