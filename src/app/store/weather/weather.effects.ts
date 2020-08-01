@@ -11,14 +11,11 @@ import {
   getCityWeatherById,
   setSearchResult,
   setFavorites,
-  // setCurrentCity
 } from './actions/weather.actions';
 import { of, Observable } from "rxjs";
-import { City } from '../../models/city.model';
 import { State } from './reducers/weather.reducer';
 import { Store, select } from "@ngrx/store";
 import * as WeatherActions from "./actions/weather.actions";
-import {action} from "../../models/action.model";
 
 @Injectable()
 export class WeatherEffects {

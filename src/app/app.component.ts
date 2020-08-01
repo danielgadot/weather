@@ -7,9 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  // loading$: Observable<boolean> = this.store.pipe(select('weather', 'loaded'));
-
-
   constructor() {
 
   }

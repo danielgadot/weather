@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../services/api.service";
 import { City } from '../models/city.model';
-import { Observable, Subject } from "rxjs";
+import { Observable } from "rxjs";
 import { Store, select } from "@ngrx/store";
-import { tap, map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import * as WeatherActions from '../store/weather/actions/weather.actions';
-import {initialState, State} from '../store/weather/reducers/weather.reducer';
+import { State } from '../store/weather/reducers/weather.reducer';
 
 @Component({
   selector: 'city-weather',
@@ -17,8 +17,7 @@ export class CityWeatherComponent implements OnInit {
   constructor(private apiService: ApiService, private store: Store<State>) { }
 
   city$: Observable<any>;
-  // forecastDays$: Observable<any> = this.store.pipe(select('weather', 'forecastDays'));
-  city;
+  city: any;
 
   isDegreesCelsius$ = this.store.pipe(select('weather', 'isDegreesCelsius'));
   isThemeLight$ = this.store.pipe(select('weather', 'isThemeLight'));
@@ -36,15 +35,6 @@ export class CityWeatherComponent implements OnInit {
   addRemoveFavorite(operation) {
     if (operation === 'add') {
       this.store.dispatch(WeatherActions.addToFav({
-        /*
-        * @Effect() logoutEffect$ = this.actions$
-          .ofType(LOGOUT)
-          .withLatestFrom(this.store$)
-          .map(([action: Action, storeState: AppState]) => {
-             return storeState.getUser;
-           })
-          .map(payload => ({type: 'LOGOUT_USER', payload}))
-        * */
         city: this.city,
       }))
     } else if ('remove') {
