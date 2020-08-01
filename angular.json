@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "herolo-home-assignment": {
+    "Daniel-Gadot-23-07-2020": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/herolo-home-assignment",
+            "outputPath": "dist/Daniel-Gadot-23-07-2020",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "herolo-home-assignment:build"
+            "browserTarget": "Daniel-Gadot-23-07-2020:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "herolo-home-assignment:build:production"
+              "browserTarget": "Daniel-Gadot-23-07-2020:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "herolo-home-assignment:build"
+            "browserTarget": "Daniel-Gadot-23-07-2020:build"
           }
         },
         "test": {
@@ -114,18 +114,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "herolo-home-assignment:serve"
+            "devServerTarget": "Daniel-Gadot-23-07-2020:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "herolo-home-assignment:serve:production"
+              "devServerTarget": "Daniel-Gadot-23-07-2020:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "herolo-home-assignment",
+  "defaultProject": "Daniel-Gadot-23-07-2020",
   "cli": {
     "defaultCollection": "@ngrx/schematics"
   }
