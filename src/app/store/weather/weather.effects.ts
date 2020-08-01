@@ -47,6 +47,7 @@ export class WeatherEffects {
             }),
             catchError((err) => {
               console.log('%c err :: ', 'color: red;font-size:16px', err);
+              this.store.dispatch(WeatherActions.toggleModal({ err: err }))
               return of({ type: '[WeatherEffects] searchCity Network Error' })
             })
           )
@@ -61,7 +62,10 @@ export class WeatherEffects {
           map(cities => cities[0]),
           tap(cities => console.log('%c payload :: ', 'color: red;font-size:16px', cities)),
           map(cities => ({ type: '[weather Effect] getCityWeatherByIdSuccess', payload: cities})),
-          catchError(error => of({ type: '[weather Effect] getCityWeatherByIdError', payload: error})),
+          catchError(error => {
+            this.store.dispatch(WeatherActions.toggleModal({err: error}))
+            return of({ type: '[weather Effect] getCityWeatherByIdError', payload: error})
+          }),
         )
       })
     ));

@@ -1,0 +1,4 @@
+<div *ngIf="isErrModalOpen$ | async" class="modal" (click)="openModal()">
+  <span class="close-modal-btn" (click)="closeModal()">[X]</span>
+  {{(errMsg$ | async).message}}
+</div>

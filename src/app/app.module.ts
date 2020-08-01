@@ -19,6 +19,7 @@ import {LocationStrategy, Location, PathLocationStrategy} from '@angular/common'
 import { FormsModule } from "@angular/forms";
 import { WeatherCardComponent } from './weather-card/weather-card.component';
 import { ForecastComponent } from './forecast/forecast.component';
+import { ModalComponent } from './modal/modal.component';
 
 
 const routes: Routes = [
@@ -34,7 +35,8 @@ const routes: Routes = [
     CityWeatherComponent,
     NavbarComponent,
     WeatherCardComponent,
-    ForecastComponent
+    ForecastComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

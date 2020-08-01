@@ -16,6 +16,8 @@ export interface State  extends Weather {
     citiesFound: any[];
     isDegreesCelsius: boolean;
     isThemeLight: boolean;
+    isErrModalOpen: boolean;
+    errMsg: string;
 }
 
 export const initialState: State = {
@@ -46,6 +48,8 @@ export const initialState: State = {
     citiesFound: [],
     isDegreesCelsius: true,
     isThemeLight: true,
+    isErrModalOpen: false,
+    errMsg:'',
 };
 
 export function weatherReducer(state: State | undefined, action: Action) {
@@ -121,6 +125,13 @@ const _weatherReducer = createReducer(
     return {
       ...state,
       isThemeLight: !state.isThemeLight,
+    }
+  }),
+  on(WeatherActions.toggleModal, (state, payload) => {
+    return {
+      ...state,
+      isErrModalOpen: !state.isErrModalOpen,
+      errMsg: payload.err
     }
   })
 );

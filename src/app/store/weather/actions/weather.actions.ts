@@ -17,6 +17,9 @@ export const removeCitiesFound = createAction('[search Component] removeCitiesFo
 export const changeTheme = createAction('[Navbar] change Theme', props<any>());
 export const changeDegrees = createAction('[Navbar] change Degrees', props<any>());
 
+export const toggleModal = createAction('[Effect] toggleModal', props<any>());
+
+
 // Actions to add
 
 // save favorites to localStorage
