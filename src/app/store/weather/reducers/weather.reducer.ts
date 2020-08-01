@@ -116,6 +116,10 @@ const _weatherReducer = createReducer(
     return {
       ...state,
       favorites: payload.favorites,
+      currentCity: {
+        ...state.currentCity,
+        isFavorite: isCityFavorite(state, payload),
+      }
     }
   }),
   on(WeatherActions.changeDegrees, (state, payload) => {
@@ -172,4 +176,14 @@ function removeFromFavReducer(state, payload) {
   newFavCities = newFavCities.filter(city => city.id != payload.city.id);
   localStorage.setItem('favorites', JSON.stringify(newFavCities));
   return newFavCities;
+}
+
+function isCityFavorite(state, payload) {
+  if (!payload.favorites) {
+    return;
+  }
+  const favCities = payload.favorites;
+  const currentCity = state.currentCity;
+  const isFavorite = favCities.filter(city => city.id === currentCity.id);
+  return isFavorite.length > 0;
 }

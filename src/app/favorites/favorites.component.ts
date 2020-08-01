@@ -31,7 +31,7 @@ export class FavoritesComponent implements OnInit {
 
   navigateToHome(city) {
     console.log('%c clicked navigate :: ', 'color: red;font-size:16px', city);
-    this.store.dispatch(WeatherActions.getCityWeatherById(city.id));
+    this.store.dispatch(WeatherActions.getCityWeatherById({ id: city.id, name: city.name }));
     this.router.navigateByUrl('/')
   }
 
