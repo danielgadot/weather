@@ -14,7 +14,6 @@ export class ForecastComponent implements OnInit {
   constructor(private store: Store<State>) { }
 
   ngOnInit(): void {
-    console.log('%c forecast :: ', 'color: red;font-size:16px', );
   }
 
 }

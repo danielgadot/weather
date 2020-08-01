@@ -15,7 +15,6 @@ export class FavoritesComponent implements OnInit {
 
   favorites$: Observable<any> = this.store.pipe(select('weather', 'favorites'),
     map(favorites => {
-      console.log('%c favorites :: ', 'color: red;font-size:16px', favorites);
       return favorites.map(favCity => ({
         name: favCity.name,
         temperature: favCity.temperature,

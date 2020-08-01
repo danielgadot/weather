@@ -27,9 +27,7 @@ export class CityWeatherComponent implements OnInit {
     this.city$ = this.store.pipe(
       select('weather', 'currentCity'),
       map((currentCity: City) => {
-        console.log('%c currentCity :: ', 'color: red;font-size:16px', currentCity);
           this.city = currentCity;
-          // this.isFavorite$ = this.streamFavorites();
           return currentCity;
       }),
     );
