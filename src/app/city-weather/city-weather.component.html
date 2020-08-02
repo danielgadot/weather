@@ -4,7 +4,7 @@
     <div class="content" *ngIf="city$ | async as city">
 
       <img *ngIf="!city.isFavorite" src="./../../Daniel-Gadot-23-07-2020/assets/img/unfavorite.svg" class="fav-icon" (click)="addRemoveFavorite('add')">
-      <img *ngIf="city.isFavorite"  src="./../../assets/img/Daniel-Gadot-23-07-2020/favorite.svg" class="fav-icon" (click)="addRemoveFavorite('remove')">
+      <img *ngIf="city.isFavorite"  src="./../../Daniel-Gadot-23-07-2020/assets/img/favorite.svg" class="fav-icon" (click)="addRemoveFavorite('remove')">
       <div class="city-current-weather">
         <span>{{ city.name}}</span>
         <span *ngIf="isDegreesCelsius$ | async">{{ city.temperature.celsius.current }} C</span>
