@@ -4,9 +4,9 @@
       type="text"
       class="search"
       placeholder="Search City..."
-      (keydown.enter)="searchCity()"
-      [(ngModel)]="searchVal">
-  <img src="./../../assets/img/search.svg" class="icon-search" (click)="searchCity()">
+      [(ngModel)]="search"
+      (ngModelChange)="searchChangedHandler($event)">
+  <img src="./../../assets/img/search.svg" class="icon-search">
   <div *ngIf="citiesFound$ | async as citiesFound" class="search-result-wrapper">
       <ul class="cities-found-ul" *ngIf="citiesFound.length > 0">
           <li *ngFor="let city of citiesFound" class="city-found" (click)="onClickCity(city)">

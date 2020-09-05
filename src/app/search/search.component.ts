@@ -2,9 +2,9 @@ import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
 import { ApiService } from "../services/api.service";
 import { Store, select } from "@ngrx/store";
 import * as WeatherActions from "../store/weather/actions/weather.actions";
-import { Observable } from 'rxjs';
+import {Observable, Subject } from 'rxjs';
 import { State } from '../store/weather/reducers/weather.reducer';
-import { tap } from "rxjs/operators";
+import {tap, debounceTime, distinctUntilChanged} from "rxjs/operators";
 import {setFavorites} from "../store/weather/actions/weather.actions";
 
 @Component({
@@ -13,7 +13,9 @@ import {setFavorites} from "../store/weather/actions/weather.actions";
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
-  searchVal = '';
+
+  search: string;
+  searchChanged: Subject<string> = new Subject<string>();
   citiesFound$: Observable<any>;
   isDropdownOpen = false;
 
@@ -23,19 +25,25 @@ export class SearchComponent implements OnInit {
     this.citiesFound$ = this.store.pipe(
       select('weather', 'citiesFound'),
       tap(cities => this.isDropdownOpen = cities.length > 0)
-    )
-  }
 
-  searchCity() {
-    this.store.dispatch(
-      WeatherActions.searchCity({
-        searchWord: this.searchVal,
-      })
     )
+
+    this.searchChanged.pipe(
+      debounceTime(300), // wait 300ms after the last event before emitting last event
+      distinctUntilChanged()) // only emit if value is different from previous value
+      .subscribe(search => {
+        this.search = search;
+        this.store.dispatch(
+          WeatherActions.searchCity({
+            searchWord: this.search,
+          })
+        )
+      });
+
   }
 
   onClickCity(city) {
-    this.searchVal = '';
+    this.search = '';
     this.store.dispatch(WeatherActions.removeCitiesFound({}))
     this.store.dispatch(WeatherActions.getCityWeatherById({
         id: city.Key,
@@ -53,6 +61,10 @@ export class SearchComponent implements OnInit {
           WeatherActions.removeCitiesFound({})
         )
       }
+  }
+
+  searchChangedHandler(text: string) {
+    this.searchChanged.next(text);
   }
 
 }
