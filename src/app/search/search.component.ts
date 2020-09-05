@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     this.citiesFound$ = this.store.pipe(
       select('weather', 'citiesFound'),
-      tap(cities => this.isDropdownOpen = cities.length > 0)
+      tap(cities => this.isDropdownOpen = cities && cities.length > 0)
 
     )
 
@@ -32,6 +32,7 @@ export class SearchComponent implements OnInit {
       debounceTime(300), // wait 300ms after the last event before emitting last event
       distinctUntilChanged()) // only emit if value is different from previous value
       .subscribe(search => {
+        console.log('%c search :: ', 'color: red;font-size:16px', search);
         this.search = search;
         this.store.dispatch(
           WeatherActions.searchCity({

@@ -1,14 +1,13 @@
 .search {
   padding: 10px;
-  border-right: 0;
+  border: 0;
   border-radius: 6px 0 0 6px;
+  font-size: 16px;
   &:focus {
     outline: none;
   }
 }
 .icon-search {
-  border: 2px solid black;
-  border-left: 0;
   border-radius: 0 6px 6px 0;
   padding: 10px;
   background-color: white;
