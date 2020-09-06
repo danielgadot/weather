@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import {switchMap, map, tap, catchError} from 'rxjs/operators';
+import {switchMap, map, tap, catchError, withLatestFrom} from 'rxjs/operators';
 import { ApiService } from '../../services/api.service';
 import { initialState }  from './reducers/weather.reducer';
 import {
@@ -11,6 +11,7 @@ import {
   getCityWeatherById,
   setSearchResult,
   setFavorites,
+  setCurrentLocation
 } from './actions/weather.actions';
 import { of, Observable } from "rxjs";
 import { State } from './reducers/weather.reducer';
@@ -21,7 +22,16 @@ import * as WeatherActions from "./actions/weather.actions";
 export class WeatherEffects {
   constructor(private apiService: ApiService, private actions$: Actions, private store: Store<State>) {}
 
-  ngrxOnInitEffects(): Action {
+  async ngrxOnInitEffects() {
+    await navigator.geolocation.getCurrentPosition(location => {
+      this.store.dispatch(WeatherActions.setCurrentLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      }))
+    });
+    this.apiService.getGeoPosition(this.store.currentLocation.latitude, this.store.currentLocation.latitude).pipe(
+
+    )
     const favorites = JSON.parse(localStorage.getItem('favorites'))
     this.store.dispatch(WeatherActions.getCityWeatherById({ id: initialState.currentCity.id, name:  initialState.currentCity.name}));
     this.store.dispatch(WeatherActions.getForecastDays({ id: initialState.currentCity.id }));
@@ -97,5 +107,13 @@ export class WeatherEffects {
         ).subscribe() }),
       )
     , { dispatch: false })
+  // getLocation$ = createEffect(
+  //   () => this.actions$.pipe(
+  //     ofType({type: '[WeatherEffects]: Init'}),
+  //     map((l) => {
+  //       console.log('%c getLocation$ :: ', 'color: red;font-size:16px', l);
+  //       return of({ type: '[weather Effect] getForecastDays Error', payload: error})
+  //     })
+  // )
 
 }

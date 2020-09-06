@@ -18,6 +18,10 @@ export interface State  extends Weather {
     isThemeLight: boolean;
     isErrModalOpen: boolean;
     errMsg: string;
+    currentLocation: {
+      latitude: number,
+      longitude: number
+    };
 }
 
 export const initialState: State = {
@@ -50,6 +54,10 @@ export const initialState: State = {
     isThemeLight: true,
     isErrModalOpen: false,
     errMsg:'',
+    currentLocation: {
+      latitude: 0,
+      longitude: 0
+    }
 };
 
 export function weatherReducer(state: State | undefined, action: Action) {
@@ -147,6 +155,15 @@ const _weatherReducer = createReducer(
       ...state,
       isErrModalOpen: false,
       errMsg: payload.err
+    }
+  }),
+  on(WeatherActions.setCurrentLocation, (state, payload) => {
+    return {
+      ...state,
+      currentLocation: {
+        latitude: payload.latitude,
+        longitude: payload.longitude
+      },
     }
   }),
   on(WeatherActions.getCityWeatherByIdSuccess, (state, payload) => {

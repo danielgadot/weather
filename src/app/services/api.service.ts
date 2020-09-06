@@ -22,6 +22,9 @@ export class ApiService {
 
   getForecast(locationKey) {
     return this.http.get(`https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}`, { params: { apikey: API_KEY }})
+  }
 
+  getGeoPosition(lat, lon) {
+    return this.http.get(` https://developer.accuweather.com/accuweather-locations-api/apis/get/locations/v1/cities/geoposition/search`, { params: { q: `${lat},${lon}`, apikey: API_KEY }})
   }
 }
