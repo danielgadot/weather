@@ -111,6 +111,8 @@ const _weatherReducer = createReducer(
       currentCity: {
         ...state.currentCity,
       name: payload.name,
+      id: payload.id,
+      isFavorite: payload.isFavorite
       }
     }
   }),

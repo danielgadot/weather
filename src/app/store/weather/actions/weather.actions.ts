@@ -29,6 +29,7 @@ export const changeTheme = createAction('[Navbar Component] change Theme', props
 export const changeDegrees = createAction('[Navbar Component] change Degrees', props<any>());
 
 export const setCurrentLocation = createAction('[Weather Effect] set current location', props<any>());
+export const setCurrentLocationSuccess = createAction('[Weather Effect] set current location SUCCESS', props<any>());
 
 
 

@@ -11,8 +11,10 @@ import {
   getCityWeatherById,
   setSearchResult,
   setFavorites,
-  setCurrentLocation
+  setCurrentLocation,
+  setCurrentLocationSuccess
 } from './actions/weather.actions';
+import { Geoposition } from '../../models/geoposition';
 import { of, Observable } from "rxjs";
 import { State } from './reducers/weather.reducer';
 import { Store, select } from "@ngrx/store";
@@ -22,19 +24,41 @@ import * as WeatherActions from "./actions/weather.actions";
 export class WeatherEffects {
   constructor(private apiService: ApiService, private actions$: Actions, private store: Store<State>) {}
 
-  async ngrxOnInitEffects() {
-    await navigator.geolocation.getCurrentPosition(location => {
+   ngrxOnInitEffects() {
+     navigator.geolocation.getCurrentPosition(location => {
       this.store.dispatch(WeatherActions.setCurrentLocation({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude
       }))
     });
-    this.apiService.getGeoPosition(this.store.currentLocation.latitude, this.store.currentLocation.latitude).pipe(
+    const latitude$ = this.store.select('weather', 'currentLocation').pipe(
+      tap((location) => {
+        if (location.latitude !== 0) {
 
-    )
+        this.apiService.getGeoPosition(location.latitude, location.latitude).pipe(
+          tap((location: Geoposition) => {
+            if (location.hasOwnProperty('Key')) {
+              this.store.dispatch(WeatherActions.getCityWeatherById({ id: location.Key, name:  location.LocalizedName}));
+              this.store.dispatch(WeatherActions.getForecastDays({ id: location.Key }));
+              this.store.dispatch(WeatherActions.setCityName({
+                id: parseInt(location.Key),
+                name: location.LocalizedName,
+                type:'[weather Effect] setCityName',
+                isFavorite: false
+              }))
+
+            } else {
+              this.store.dispatch(WeatherActions.getCityWeatherById({ id: initialState.currentCity.id, name:  initialState.currentCity.name}));
+              this.store.dispatch(WeatherActions.getForecastDays({ id: initialState.currentCity.id }));
+            }
+
+          })
+        ).subscribe()
+        }
+      })
+    ).subscribe();
     const favorites = JSON.parse(localStorage.getItem('favorites'))
-    this.store.dispatch(WeatherActions.getCityWeatherById({ id: initialState.currentCity.id, name:  initialState.currentCity.name}));
-    this.store.dispatch(WeatherActions.getForecastDays({ id: initialState.currentCity.id }));
+
     this.store.dispatch(setFavorites({ favorites }))
     return { type: '[WeatherEffects]: Init' };
   }
@@ -107,13 +131,14 @@ export class WeatherEffects {
         ).subscribe() }),
       )
     , { dispatch: false })
+
   // getLocation$ = createEffect(
   //   () => this.actions$.pipe(
-  //     ofType({type: '[WeatherEffects]: Init'}),
-  //     map((l) => {
+  //     ofType(setCurrentLocationSuccess),
+  //     tap((l) => {
   //       console.log('%c getLocation$ :: ', 'color: red;font-size:16px', l);
-  //       return of({ type: '[weather Effect] getForecastDays Error', payload: error})
+  //       return of({ type: '[weather Effect] getForecastDays Error', payload: ''})
   //     })
   // )
-
+  // )
 }
