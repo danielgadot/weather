@@ -2,21 +2,21 @@
 <div class="wrapper" (click)="onCardClick()" [ngClass]="(isThemeLight$ | async) ? 'dark' : 'light'">
   <div class="top">
     <div class="content" *ngIf="city$ | async as city">
+      <span *ngIf="city.temperature.celsius.current > 10"><img class="current-weather-img" src="./../../assets/img/sunny.svg" alt=""></span>
+      <span *ngIf="city.temperature.celsius.current < 10"><img class="current-weather-img" src="./../../assets/img/rain.svg" alt=""></span>
 
-      <img *ngIf="!city.isFavorite" src="./../../assets/img/unfavorite.svg" class="fav-icon" (click)="addRemoveFavorite('add')">
-      <img *ngIf="city.isFavorite"  src="./../../assets/img/favorite.svg" class="fav-icon" (click)="addRemoveFavorite('remove')">
       <div class="city-current-weather">
         <span>{{ city.name}}</span>
         <span *ngIf="isDegreesCelsius$ | async">{{ city.temperature.celsius.current }} C</span>
         <span *ngIf="!(isDegreesCelsius$ | async)">{{ city.temperature.fahrenheit.current }} F</span>
+        <div class="bottom">
+          <h2 class="weather-text">{{ (city$ | async).temperature.weatherText }}</h2>
+        </div>
       </div>
-      <span *ngIf="city.temperature.celsius.current > 10"><img class="current-weather-img" src="./../../assets/img/sunny.svg" alt=""></span>
-      <span *ngIf="city.temperature.celsius.current < 10"><img class="current-weather-img" src="./../../assets/img/rain.svg" alt=""></span>
+      <img *ngIf="!city.isFavorite" src="./../../assets/img/unfavorite.svg" class="fav-icon" (click)="addRemoveFavorite('add')">
+      <img *ngIf="city.isFavorite"  src="./../../assets/img/favorite.svg" class="fav-icon" (click)="addRemoveFavorite('remove')">
     </div>
 
   </div>
 
-  <div class="bottom">
-    <h2 class="weather-text">{{ (city$ | async).temperature.weatherText }}</h2>
-  </div>
 </div>

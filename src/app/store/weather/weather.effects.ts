@@ -26,6 +26,7 @@ export class WeatherEffects {
 
    ngrxOnInitEffects() {
      navigator.geolocation.getCurrentPosition(location => {
+            console.log('%c location :: ', 'color: red;font-size:16px', location);
       this.store.dispatch(WeatherActions.setCurrentLocation({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude
@@ -35,13 +36,13 @@ export class WeatherEffects {
       tap((location) => {
         if (location.latitude !== 0) {
 
-        this.apiService.getGeoPosition(location.latitude, location.latitude).pipe(
+        this.apiService.getGeoPosition(location.latitude, location.longitude).pipe(
           tap((location: Geoposition) => {
             if (location.hasOwnProperty('Key')) {
               this.store.dispatch(WeatherActions.getCityWeatherById({ id: location.Key, name:  location.LocalizedName}));
               this.store.dispatch(WeatherActions.getForecastDays({ id: location.Key }));
               this.store.dispatch(WeatherActions.setCityName({
-                id: parseInt(location.Key),
+                id: Number(location.Key),
                 name: location.LocalizedName,
                 type:'[weather Effect] setCityName',
                 isFavorite: false
@@ -89,6 +90,9 @@ export class WeatherEffects {
           map(cities => cities[0]),
           map(city => {
             this.store.dispatch(WeatherActions.getCityWeatherByIdSuccess({ city: city }))
+            const favorites = JSON.parse(localStorage.getItem('favorites'))
+            this.store.dispatch(setFavorites({ favorites }))
+
             return { type: '[weather Effect] getWeatherById DONE'}
           }),
           catchError(error => {

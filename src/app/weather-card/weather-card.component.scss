@@ -1,9 +1,12 @@
 .card {
-  padding: 10px;
+  padding: 2px;
   text-align: center;
   border-radius: 8px;
   font-size: 32px;
   width: 100%;
+  h5 {
+    margin: 0;
+  }
 }
 
 @media screen and (max-width: 990px) {
