@@ -25,6 +25,6 @@ export class ApiService {
   }
 
   getGeoPosition(lat, lon) {
-    return this.http.get(` http://dataservice.accuweather.com/locations/v1/cities/geoposition/search`, { params: { q: `${lat},${lon}`, apikey: API_KEY }})
+    return this.http.get(`https://dataservice.accuweather.com/locations/v1/cities/geoposition/search`, { params: { q: `${lat},${lon}`, apikey: API_KEY }})
   }
 }
