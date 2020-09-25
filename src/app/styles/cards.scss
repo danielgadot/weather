@@ -1,0 +1,29 @@
+/**
+ * Card Base
+ *
+ * Defines the appearance and behaviour of the default card with its multiple parts:
+ * - Card Image
+ * - Card Logo
+ * - Card Content
+ * - Card Footer
+
+ * Font -Text
+ * Color & background
+ * Box
+ * Positioning
+ * Effects
+
+*/
+
+// favorite weather card
+.card {
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: 20px;
+  width: 100px;
+  min-height: 167px;
+  &:hover {
+    cursor: pointer;
+  }
+}

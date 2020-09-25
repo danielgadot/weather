@@ -2,8 +2,7 @@
 <div class="wrapper" (click)="onCardClick()" [ngClass]="(isThemeLight$ | async) ? 'dark' : 'light'">
   <div class="top">
     <div class="content" *ngIf="city$ | async as city">
-      <span *ngIf="city.temperature.celsius.current > 10"><img class="current-weather-img" src="./../../assets/img/sunny.svg" alt=""></span>
-      <span *ngIf="city.temperature.celsius.current < 10"><img class="current-weather-img" src="./../../assets/img/rain.svg" alt=""></span>
+      <span><img class="current-weather-img" [src]="weatherIcon"  alt=""></span>
 
       <div class="city-current-weather">
         <span>{{ city.name}}</span>

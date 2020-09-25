@@ -18,7 +18,7 @@ export class CityWeatherComponent implements OnInit {
 
   city$: Observable<any>;
   city: any;
-
+  weatherIcon: string;
   isDegreesCelsius$ = this.store.pipe(select('weather', 'isDegreesCelsius'));
   isThemeLight$ = this.store.pipe(select('weather', 'isThemeLight'));
 
@@ -27,6 +27,7 @@ export class CityWeatherComponent implements OnInit {
       select('weather', 'currentCity'),
       map((currentCity: City) => {
           this.city = currentCity;
+          this.setWeatherIcon(currentCity);
           return currentCity;
       }),
     );
@@ -44,6 +45,15 @@ export class CityWeatherComponent implements OnInit {
     }
   }
   onCardClick(){
+  }
+  setWeatherIcon(city) {
+    if (city.temperature.weatherText.match(/sun/gi)) {
+      this.weatherIcon = './../../assets/img/sunny.svg';
+    } else if (city.temperature.weatherText.match(/rain/gi)) {
+      this.weatherIcon = './../../assets/img/rain.svg';
+    } else if (city.temperature.weatherText.match(/cloud/gi)) {
+      this.weatherIcon = './../../assets/img/cloudy.svg';
+    }
   }
 
 }
