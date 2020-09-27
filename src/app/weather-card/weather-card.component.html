@@ -2,7 +2,7 @@
   <div class="card-body">
     <h5 class="card-title">{{ weatherData.date | date: 'E' }}</h5>
     <h5 class="card-title">{{ weatherData.name }}</h5>
-
+    <span><img class="card-title-img" src="{{'./../../assets/img/' + weatherData.weatherIcon + '.svg' }}"  alt=""></span>
     <p class="card-text">
       <span *ngIf="weatherData.temperature.min !== 0">
         <span *ngIf="!(isDegreesCelsius$ | async)">{{weatherData.temperature.min}}C - {{weatherData.temperature.max}}C</span>

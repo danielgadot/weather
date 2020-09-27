@@ -3,6 +3,7 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import {switchMap, map, tap, catchError, withLatestFrom} from 'rxjs/operators';
 import { ApiService } from '../../services/api.service';
+import { WeatherService } from '../../services/weather.service';
 import { initialState }  from './reducers/weather.reducer';
 import {
   searchCity,
@@ -22,7 +23,7 @@ import * as WeatherActions from "./actions/weather.actions";
 
 @Injectable()
 export class WeatherEffects {
-  constructor(private apiService: ApiService, private actions$: Actions, private store: Store<State>) {}
+  constructor(private apiService: ApiService, private actions$: Actions, private store: Store<State>, private weatherService: WeatherService) {}
 
    ngrxOnInitEffects() {
      navigator.geolocation.getCurrentPosition(location => {
@@ -90,6 +91,7 @@ export class WeatherEffects {
           map(cities => cities[0]),
           map(city => {
             this.store.dispatch(WeatherActions.getCityWeatherByIdSuccess({ city: city }))
+            this.store.dispatch(WeatherActions.getForecastDays({ id: payload.id }));
             const favorites = JSON.parse(localStorage.getItem('favorites'))
             this.store.dispatch(setFavorites({ favorites }))
 
@@ -119,7 +121,8 @@ export class WeatherEffects {
                 temperature: {
                   min: day.Temperature.Minimum.Value,
                   max: day.Temperature.Maximum.Value,
-                }
+                },
+                weatherIcon: this.weatherService.getWeatherIcon(day.Day.IconPhrase)
               }
             })
           }
