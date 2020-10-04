@@ -3,11 +3,17 @@
   text-align: center;
   border-radius: 8px;
   font-size: 20px;
-  width: 100px;
+  width: 190px;
   min-height: 167px;
   &:hover {
     cursor: pointer;
   }
+}
+.close-btn {
+  float: right;
+  color: white;
+  background: white;
+  border-radius: 8px;
 }
 
 @media screen and (max-width: 990px) {

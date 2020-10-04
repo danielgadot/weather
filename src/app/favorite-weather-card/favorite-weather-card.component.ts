@@ -25,4 +25,10 @@ export class FavoriteWeatherCardComponent implements OnInit {
     this.router.navigateByUrl('/')
   }
 
+  removeFavorite() {
+    this.store.dispatch(WeatherActions.removeFromFav({
+      city: this.weatherData,
+    }))
+  }
+
 }
