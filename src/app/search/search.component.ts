@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from "../services/api.service";
 import { Store, select } from "@ngrx/store";
 import * as WeatherActions from "../store/weather/actions/weather.actions";
@@ -19,13 +19,13 @@ export class SearchComponent implements OnInit {
   citiesFound$: Observable<any>;
   isDropdownOpen = false;
 
-  constructor(private apiService: ApiService, private store: Store<State>, private eRef: ElementRef) { }
+  constructor(private apiService: ApiService, private store: Store<State>) {
+  }
 
   ngOnInit(): void {
     this.citiesFound$ = this.store.pipe(
       select('weather', 'citiesFound'),
       tap(cities => this.isDropdownOpen = cities && cities.length > 0)
-
     )
 
     this.searchChanged.pipe(
@@ -51,21 +51,20 @@ export class SearchComponent implements OnInit {
         name: city.LocalizedName
       })
     )
-    this.store.dispatch(WeatherActions.getForecastDays({ id: city.Key }))
+    this.store.dispatch(WeatherActions.getForecastDays({id: city.Key}))
     this.store.dispatch(setFavorites({}))
   }
 
   @HostListener('document:click', ['$event'])
-  toggleOffSearchResultMenu(event){
-      if (this.isDropdownOpen && !event.target.classList.contains('search-result-wrapper')) {
-        this.store.dispatch(
-          WeatherActions.removeCitiesFound({})
-        )
-      }
+  toggleOffSearchResultMenu(event) {
+    if (this.isDropdownOpen && !event.target.classList.contains('search-result-wrapper')) {
+      this.store.dispatch(
+        WeatherActions.removeCitiesFound({})
+      )
+    }
   }
 
   searchChangedHandler(text: string) {
     this.searchChanged.next(text);
   }
-
 }

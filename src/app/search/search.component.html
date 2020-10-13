@@ -1,13 +1,15 @@
 <div class="search-wrapper">
-
-  <input
-      type="text"
-      class="search"
-      placeholder="Search City..."
-      [(ngModel)]="search"
-      (ngModelChange)="searchChangedHandler($event)">
-  <img src="./../../assets/img/search.svg" class="icon-search">
-  <div *ngIf="citiesFound$ | async as citiesFound" class="search-result-wrapper">
+  <div class="search-input-wrapper">
+    <input
+        #searchInput
+        type="text"
+        class="search"
+        placeholder="Search City..."
+        [(ngModel)]="search"
+        (ngModelChange)="searchChangedHandler($event)">
+    <img src="./../../assets/img/search.svg" class="icon-search">
+  </div>
+  <div #countriesDropdown *ngIf="citiesFound$ | async as citiesFound" class="search-result-wrapper">
       <ul class="cities-found-ul" *ngIf="citiesFound.length > 0">
           <li *ngFor="let city of citiesFound" class="city-found" (click)="onClickCity(city)">
               <span>{{city.LocalizedName}}</span>
