@@ -5,9 +5,11 @@
 .body {
   background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 100%), url('./assets/img/weather-background.jpg');
   background-size: cover;
-  background-repeat: no-repeat;
+  //background-repeat: repeat;
   // strech it?
   height: 100vh;
+  display: block;
+  overflow: auto;
 }
 .day {
   background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 100%), url('./assets/img/weather-background.jpg');

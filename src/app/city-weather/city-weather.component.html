@@ -2,7 +2,7 @@
 <div class="wrapper" (click)="onCardClick()" [ngClass]="(isThemeLight$ | async) ? 'dark' : 'light'">
   <div class="top">
     <div class="content" *ngIf="city$ | async as city">
-      <span><img class="current-weather-img" [src]="weatherIcon"  alt=""></span>
+      <span><img class="current-weather-img icon" [src]="weatherIcon"  alt=""></span>
 
       <div class="city-current-weather">
         <span>{{ city.name}}</span>
@@ -12,8 +12,8 @@
           <h2 class="weather-text">{{ (city$ | async).temperature.weatherText }}</h2>
         </div>
       </div>
-      <img *ngIf="!city.isFavorite" src="./../../assets/img/unfavorite.svg" class="fav-icon" (click)="addRemoveFavorite('add')">
-      <img *ngIf="city.isFavorite"  src="./../../assets/img/favorite.svg" class="fav-icon" (click)="addRemoveFavorite('remove')">
+      <img *ngIf="!city.isFavorite" src="./../../assets/img/unfavorite.svg" class="fav-icon icon" (click)="addRemoveFavorite('add')">
+      <img *ngIf="city.isFavorite"  src="./../../assets/img/favorite.svg" class="fav-icon icon" (click)="addRemoveFavorite('remove')">
     </div>
 
   </div>
