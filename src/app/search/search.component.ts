@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import { ApiService } from "../services/api.service";
 import { Store, select } from "@ngrx/store";
 import * as WeatherActions from "../store/weather/actions/weather.actions";
@@ -18,6 +18,9 @@ export class SearchComponent implements OnInit {
   searchChanged: Subject<string> = new Subject<string>();
   citiesFound$: Observable<any>;
   isDropdownOpen = false;
+  counter: number = 0;
+  @ViewChild('countriesDropdown') countriesDropdown;
+  private cities: any[];
 
   constructor(private apiService: ApiService, private store: Store<State>) {
   }
@@ -25,14 +28,16 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     this.citiesFound$ = this.store.pipe(
       select('weather', 'citiesFound'),
-      tap(cities => this.isDropdownOpen = cities && cities.length > 0)
+      tap(cities => {
+        this.isDropdownOpen = cities && cities.length > 0
+        this.cities = cities;
+      })
     )
 
     this.searchChanged.pipe(
       debounceTime(300), // wait 300ms after the last event before emitting last event
       distinctUntilChanged()) // only emit if value is different from previous value
       .subscribe(search => {
-        console.log('%c search :: ', 'color: red;font-size:16px', search);
         this.search = search;
         this.store.dispatch(
           WeatherActions.searchCity({
@@ -56,15 +61,37 @@ export class SearchComponent implements OnInit {
   }
 
   @HostListener('document:click', ['$event'])
-  toggleOffSearchResultMenu(event) {
-    if (this.isDropdownOpen && !event.target.classList.contains('search-result-wrapper')) {
+  toggleOffSearchResultMenu(event: MouseEvent) {
+    if (this.isDropdownOpen && !(event.target as Element).classList.contains('search-result-wrapper')) {
       this.store.dispatch(
         WeatherActions.removeCitiesFound({})
       )
     }
   }
 
+  @HostListener('keydown', ['$event'])
+  handleSelectCityKey(event: KeyboardEvent) {
+    if (this.isDropdownOpen && event.key === 'Enter') {
+      this.onClickCity(this.cities[this.counter])
+    }
+  }
+
+  selectPreviousCity() {
+    if (this.counter > 0) {
+      this.counter--
+    }
+  }
+  selectNextCity() {
+    if (this.counter < this.cities.length - 1) {
+      this.counter++
+    }
+  }
+  onHoverCity(key) {
+    this.counter = key;
+  }
+
   searchChangedHandler(text: string) {
     this.searchChanged.next(text);
   }
+
 }

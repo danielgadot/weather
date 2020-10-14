@@ -32,8 +32,10 @@
 
   &:hover {
     cursor: pointer;
-    background-color: grey;
   }
+}
+.selectCity {
+  background-color: grey;
 }
 .search-input-wrapper {
   display: flex;

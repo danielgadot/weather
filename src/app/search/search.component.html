@@ -1,17 +1,18 @@
 <div class="search-wrapper">
   <div class="search-input-wrapper">
     <input
-        #searchInput
+      (keyup.arrowup)="selectPreviousCity()" (keyup.arrowdown)="selectNextCity()"
+      #searchInput
         type="text"
         class="search"
-        placeholder="Search City..."
+        placeholder="Search City,                  use Mouse or &#8593; &#8595; for navigation and &#8627; to select"
         [(ngModel)]="search"
         (ngModelChange)="searchChangedHandler($event)">
     <img src="./../../assets/img/search.svg" class="icon-search">
   </div>
-  <div #countriesDropdown *ngIf="citiesFound$ | async as citiesFound" class="search-result-wrapper">
-      <ul class="cities-found-ul" *ngIf="citiesFound.length > 0">
-          <li *ngFor="let city of citiesFound" class="city-found" (click)="onClickCity(city)">
+  <div *ngIf="citiesFound$ | async as citiesFound" class="search-result-wrapper">
+      <ul #countriesDropdown class="cities-found-ul" *ngIf="citiesFound.length > 0">
+          <li  (mouseover)="onHoverCity(key)" [ngClass]="{'selectCity': counter === key}" *ngFor="let city of citiesFound; let key = index" class="city-found" (click)="onClickCity(city)">
               <span>{{city.LocalizedName}}</span>
               <span>{{city.Country.LocalizedName}}</span>
           </li>
