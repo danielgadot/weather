@@ -1,8 +1,8 @@
 <div class="card"  [ngClass]="(isThemeLight$ | async) ? 'dark' : 'light'" (click)="navigateToHome()">
+  <span><img alt="close-btn" src="assets/img/close.svg" class="close-btn" (click)="removeFavorite()"></span>
   <div class="card-body">
     <h5 class="card-title">
       {{ weatherData.name }}
-      <span><img src="assets/img/close.svg" class="close-btn" (click)="removeFavorite()"></span>
     </h5>
     <p class="card-text">
         <span *ngIf="isDegreesCelsius$ | async">{{weatherData.temperature.celsius.current}}C</span>

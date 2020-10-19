@@ -12,8 +12,8 @@
           <h2 class="weather-text">{{ (city$ | async).temperature.weatherText }}</h2>
         </div>
       </div>
-      <img *ngIf="!city.isFavorite" src="./../../assets/img/unfavorite.svg" class="fav-icon icon" (click)="addRemoveFavorite('add')">
-      <img *ngIf="city.isFavorite"  src="./../../assets/img/favorite.svg" class="fav-icon icon" (click)="addRemoveFavorite('remove')">
+      <img *ngIf="!city.isFavorite" src="./../../assets/img/star-empty.svg" class="fav-icon icon" (click)="addRemoveFavorite('add')">
+      <img *ngIf="city.isFavorite"  src="./../../assets/img/favs-page.svg" class="fav-icon icon" (click)="addRemoveFavorite('remove')">
     </div>
 
   </div>
