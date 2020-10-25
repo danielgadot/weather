@@ -10,4 +10,14 @@ export interface Temperature {
     current: number;
   }
   weatherText: string;
+  Maximum?: {
+    Unit: string;
+    UnitType: number;
+    Value: number;
+  },
+  Minimum?: {
+    Unit: string;
+    UnitType: number;
+    Value: number;
+  }
 }

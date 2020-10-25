@@ -20,6 +20,7 @@ import { of, Observable } from "rxjs";
 import { State } from './reducers/weather.reducer';
 import { Store, select } from "@ngrx/store";
 import * as WeatherActions from "./actions/weather.actions";
+import {DailyForecasts, Forecast} from "../../models/forecast.model";
 
 @Injectable()
 export class WeatherEffects {
@@ -110,8 +111,8 @@ export class WeatherEffects {
         ofType(getForecastDays),
         map((payload) => {
           return this.apiService.getForecast(payload.id).pipe(
-        map(forecastDays => (forecastDays as any).DailyForecasts),
-        map(forecastDays => {
+        map((forecastDays: Forecast) => forecastDays.DailyForecasts),
+        map((forecastDays: DailyForecasts[]) => {
           let newForecastDays;
           if (forecastDays) {
             newForecastDays = forecastDays.map(day => {

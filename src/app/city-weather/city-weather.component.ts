@@ -32,7 +32,17 @@ export class CityWeatherComponent implements OnInit {
       }),
     );
   }
-
+ /**
+   * Disptach action addToFav or removeFromFav
+   *
+   * @remarks
+   * This method is part of the {@link core-library#Statistics | Statistics subsystem}.
+   *
+   * @param operation - add or remove param
+   * @returns void
+   *
+   * @beta
+   */
   addRemoveFavorite(operation) {
     if (operation === 'add') {
       this.store.dispatch(WeatherActions.addToFav({

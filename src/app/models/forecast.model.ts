@@ -11,3 +11,18 @@ export interface DailyForecasts {
     Link: string
 
 }
+export interface Headline {
+  Category: string;
+  EffectiveDate: string;
+  EffectiveEpochDate: number;
+  EndDate: string;
+  EndEpochDate: number;
+  Link: string;
+  MobileLink: string;
+  Severity: 7;
+  Text: string;
+}
+export interface Forecast {
+  DailyForecasts: DailyForecasts[],
+  HeadLine: Headline
+}
